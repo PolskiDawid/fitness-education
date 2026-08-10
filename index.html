@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness Education with Ross</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --green-dark:   #448702;
+      --green-mid:    #5D9C1F;
+      --green-light:  #77AB44;
+      --green-muted:  #93B86E;
+      --green-pale:   #B2D4A3;
+      --off-white:    #F4F7F0;
+      --near-black:   #1A1F17;
+      --text-body:    #2E3829;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+    }
+
+    /* ── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--off-white);
+      color: var(--text-body);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 4rem;
+      background: rgba(26, 31, 23, 0.93);
+      backdrop-filter: blur(10px);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo-svg {
+      width: 52px;
+      height: auto;
+      flex-shrink: 0;
+    }
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--off-white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .nav-logo-text span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--green-muted);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-pale);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links .nav-cta {
+      background: var(--green-mid);
+      color: #fff;
+      padding: 0.55rem 1.3rem;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .nav-links .nav-cta:hover { background: var(--green-dark); color: #fff; }
+
+    /* ── HERO ───────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 7rem 4rem 4rem;
+      overflow: hidden;
+    }
+    /* Background image layer swap src for real photo */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      z-index: 0;
+    }
+    /* Dark overlay */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(26,31,23,0.82) 0%,
+        rgba(26,31,23,0.55) 50%,
+        rgba(68,135,2,0.25) 100%
+      );
+      z-index: 1;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-content {}
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 8vw, 7.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.8rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green-light);
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.78);
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--green-mid);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
+
+    /* Hero stats — 2x2 grid, right aligned */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      justify-self: end;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 1.8rem;
+      backdrop-filter: blur(6px);
+      width: 200px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .hero-stat-number {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .hero-stat-number span {
+      color: var(--green-light);
+    }
+    .hero-stat-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    /* ── PROMISE BAND ───────────────────────────────────────── */
+    .promise-band {
+      background: var(--green-dark);
+      padding: 2.8rem 4rem;
+      text-align: center;
+    }
+    .promise-band blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--off-white);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .promise-band blockquote span { color: var(--green-pale); }
+
+    /* ── SHARED SECTION ─────────────────────────────────────── */
+    section { padding: 6rem 4rem; }
+    .section-eyebrow {
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 800;
+      color: var(--near-black);
+      line-height: 1.0;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── WHO IS THIS FOR ─────────────────────────────────────── */
+    .audience { background: var(--near-black); padding-top: 5rem; padding-bottom: 5rem; }
+    .audience .section-heading { color: #fff; }
+    .audience .section-eyebrow { color: var(--green-light); }
+    .audience .section-eyebrow::before { background: var(--green-light); }
+    .audience-header {
+      margin-bottom: 2.5rem;
+    }
+    .audience-sub {
+      font-size: 1.05rem;
+      color: rgba(178,212,163,0.75);
+      max-width: 480px;
+      line-height: 1.7;
+      font-weight: 400;
+      margin-top: 0.75rem;
+    }
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .audience-card {
+      position: relative;
+      height: 420px;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: default;
+      border: none;
+    }
+    /* Background images per card */
+    .audience-card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s ease;
+    }
+    .audience-card:hover .audience-card-bg { transform: scale(1.05); }
+    .audience-card-1 .audience-card-bg {
+      background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80');
+    }
+    .audience-card-2 .audience-card-bg {
+      background-image: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80');
+    }
+    .audience-card-3 .audience-card-bg {
+      background-image: url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80');
+    }
+    /* Gradient overlay on card strong dark for legibility */
+    .audience-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(5,8,4,1.0) 0%,
+        rgba(5,8,4,0.82) 50%,
+        rgba(5,8,4,0.5) 100%
+      );
+      z-index: 1;
+    }
+    .audience-card-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem;
+      z-index: 2;
+    }
+    .audience-card-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--green-mid);
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      margin-bottom: 0.75rem;
+    }
+    .audience-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+      line-height: 1.1;
+    }
+    .audience-card p {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.82);
+      font-weight: 400;
+    }
+
+    /* ── HOW IT WORKS ────────────────────────────────────────── */
+    .how { background: var(--off-white); }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .how-card {
+      background: #fff;
+      border-radius: 6px;
+      padding: 2.5rem 2rem;
+      position: relative;
+    }
+    .how-card-num {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--green-pale);
+      line-height: 1;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .how-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--near-black);
+      margin-bottom: 0.75rem;
+    }
+    .how-card p {
+      font-size: 1rem;
+      line-height: 1.72;
+      color: var(--text-body);
+      font-weight: 400;
+      opacity: 0.85;
+    }
+
+    /* ── TIMELINE / PROGRAMME ────────────────────────────────── */
+    .programme { background: var(--near-black); }
+    .programme .section-heading { color: #fff; }
+    .programme .section-eyebrow { color: var(--green-light); }
+    .programme .section-eyebrow::before { background: var(--green-light); }
+    .programme-intro {
+      font-size: 0.95rem;
+      color: rgba(178,212,163,0.7);
+      max-width: 500px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 3.5rem;
+    }
+
+    .timeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    /* The vertical spine */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 130px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green-dark), var(--green-light), var(--green-dark));
+      opacity: 0.4;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 0;
+      position: relative;
+    }
+    /* Dot on spine */
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 121px;
+      top: 2.2rem;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--green-mid);
+      border: 3px solid var(--near-black);
+      box-shadow: 0 0 0 2px var(--green-light);
+      z-index: 1;
+    }
+
+    .timeline-week {
+      padding: 1.6rem 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding-right: 2.5rem;
+      padding-top: 1.8rem;
+    }
+    .timeline-week-label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      text-align: right;
+      line-height: 1.2;
+    }
+    .timeline-week-label strong {
+      display: block;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      min-width: 2.5ch;
+    }
+
+    .timeline-card {
+      margin: 1rem 0 1rem 2.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(119,171,68,0.18);
+      border-radius: 6px;
+      padding: 1.5rem 1.8rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .timeline-card:hover {
+      background: rgba(93,156,31,0.08);
+      border-color: rgba(119,171,68,0.35);
+    }
+    .timeline-card h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--off-white);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+    .timeline-card p {
+      font-size: 1rem;
+      line-height: 1.68;
+      color: rgba(178,212,163,0.75);
+      font-weight: 400;
+    }
+    .timeline-card .tl-tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      background: rgba(93,156,31,0.15);
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── CTA BAND ────────────────────────────────────────────── */
+    .cta-band {
+      background: var(--green-mid);
+      padding: 5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 1.0;
+      max-width: 500px;
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.6);
+      border-radius: 2px;
+      white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      background: var(--near-black);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(119,171,68,0.12);
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--green-pale);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: rgba(178,212,163,0.45);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--green-pale); }
+    .footer-contact {
+      font-size: 0.82rem;
+      color: rgba(178,212,163,0.45);
+      text-align: right;
+      line-height: 1.9;
+    }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .hero { padding: 6rem 1.5rem 3rem; align-items: flex-start; }
+      .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; justify-self: stretch; }
+      .hero-stat { width: 100%; height: 150px; }
+      section { padding: 4rem 1.5rem; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .audience-card { height: 320px; }
+      .audience-header { flex-direction: column; align-items: flex-start; }
+      .how-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .cta-band { flex-direction: column; text-align: center; padding: 3.5rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+      .footer-contact { text-align: center; }
+      .timeline::before { left: 80px; }
+      .timeline-item { grid-template-columns: 80px 1fr; }
+      .timeline-item::before { left: 71px; }
+      .timeline-week-label strong { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.48 28.8">
+        <path fill="#ffffff" d="M24.39,18.06l-15.27.02-4.6,10.65c-1.61.09-2.98.11-4.51-.01L8.25,9.93c1.74-3.95,5.63-7.05,9.92-7.14l10.88-.22c.72-.01,1.36-.33,2.2-.63l-2.55,5.9h-10.26c-3.35.01-6.3,2.02-7.02,5.46l12.75-.02c.85,0,1.6-.26,2.52-.54l-2.3,5.33ZM56.48.06l-23.11-.06-2.53,5.96c.54-.19,1.18-.64,1.69-.64l19.27-.15c2.74-.02,4.77-2.64,4.68-5.12ZM47.01,10.76l-18.15.02-2.42,5.57c1.38-.53,2.21-.54,3.38-.54l11.31.03c3.16,0,5.78-1.75,5.89-5.09ZM34.95,21.26l-10.61-.02-2.44,5.87c1.46-.47,2.59-.58,4.21-.5,3.87.18,7.54-1.76,8.85-5.36Z"/>
+      </svg>
+      <div class="nav-logo-text">
+        Fitness Education
+        <span>with Ross</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Get in touch</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Bristol Personal Training</div>
+        <h1>Become your <em>own</em> coach.</h1>
+        <p class="hero-sub">
+          Remove the guesswork from exercise and nutrition. Learn the skills coaches use every day, delivered alongside your programme, for a lifetime of understanding.
+        </p>
+        <a href="contact.html" class="btn-primary">Start your journey <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:2px"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat reveal reveal-delay-1">
+          <div class="hero-stat-number">8<span> week</span></div>
+          <div class="hero-stat-label">Structured programme</div>
+        </div>
+        <div class="hero-stat reveal reveal-delay-2">
+          <div class="hero-stat-number">1<span>:1</span></div>
+          <div class="hero-stat-label">Dedicated coaching</div>
+        </div>
+        <div class="hero-stat reveal reveal-delay-3">
+          <div class="hero-stat-number">2<span>:1</span></div>
+          <div class="hero-stat-label">Partner training available</div>
+        </div>
+        <div class="hero-stat reveal reveal-delay-4">
+          <div class="hero-stat-number" style="font-size:2rem;line-height:1.1">FOR<br><span>LIFE</span></div>
+          <div class="hero-stat-label">Knowledge you keep</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROMISE BAND ── -->
+  <div class="promise-band">
+    <blockquote>"I'll be the <span>last coach</span> you'll ever have to hire."</blockquote>
+  </div>
+
+  <!-- ── WHO IS THIS FOR ── -->
+  <section class="audience">
+    <div class="audience-header">
+      <div>
+        <div class="section-eyebrow">Who is this for?</div>
+        <h2 class="section-heading">You don't need<br>experience.</h2>
+      </div>
+      <p class="audience-sub">The foundational knowledge Ross delivers applies to everyone regardless of age, gender, or ability.</p>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-card audience-card-1 reveal">
+        <div class="audience-card-bg"></div>
+        <div class="audience-card-content">
+          <div class="audience-card-tag">Beginners</div>
+          <h3>New to the gym</h3>
+          <p>You don't know where to start and that's fine. Ross will give you the foundations from day one, so you never have to guess again.</p>
+        </div>
+      </div>
+      <div class="audience-card audience-card-2 reveal reveal-delay-1">
+        <div class="audience-card-bg"></div>
+        <div class="audience-card-content">
+          <div class="audience-card-tag">Class-goers</div>
+          <h3>Stuck in classes</h3>
+          <p>Getting bored or not seeing results? It's time to take control of your own training and actually understand why it's working.</p>
+        </div>
+      </div>
+      <div class="audience-card audience-card-3 reveal reveal-delay-2">
+        <div class="audience-card-bg"></div>
+        <div class="audience-card-content">
+          <div class="audience-card-tag">Self-starters</div>
+          <h3>Drowning in advice?</h3>
+          <p>Too many social media tips, no real plan. Let's turn what you've been piecing together into something that actually works.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="how">
+    <div class="section-eyebrow">The process</div>
+    <h2 class="section-heading">Simple from<br>the start.</h2>
+    <div class="how-grid">
+      <div class="how-card reveal">
+        <span class="how-card-num">01</span>
+        <h3>Consultation</h3>
+        <p>A relaxed conversation in person, over the phone, or on a video call to understand your goals and where you're starting from. No commitment, no pressure.</p>
+      </div>
+      <div class="how-card reveal reveal-delay-1">
+        <span class="how-card-num">02</span>
+        <h3>Your Plan</h3>
+        <p>A personalised 8-week programme written around you, your schedule, and your starting point including a preparation week before you officially begin.</p>
+      </div>
+      <div class="how-card reveal reveal-delay-2">
+        <span class="how-card-num">03</span>
+        <h3>Start Training</h3>
+        <p>Agree a start date and get going. Each week builds on the last by week eight, you'll have the knowledge and confidence to train for life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRAMME TIMELINE ── -->
+  <section class="programme">
+    <div class="section-eyebrow">What you'll learn</div>
+    <h2 class="section-heading">Eight weeks.<br>A lifetime of knowledge.</h2>
+    <p class="programme-intro">
+      Every week has a focus, a short piece of reading, and a practical task so by the end, you can run your own training with total confidence.
+    </p>
+
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>1</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Foundation</div>
+          <h4>Measurements &amp; Goal Setting</h4>
+          <p>Learn which measurements actually matter photos, tape, and bodyweight and how to take them accurately. Set up your tracking sheet and agree your first goals.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>2–3</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Movement</div>
+          <h4>Basic Movement Patterns</h4>
+          <p>Understand how the body moves. Learn correct form and technique for pushing, pulling, squatting, and hinging the four patterns behind every effective gym session.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>4–5</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Programming</div>
+          <h4>Building Your First Programme</h4>
+          <p>Use your movement knowledge to build three sessions two resistance, one cardio. Learn RPE and progressive overload so your training keeps improving week after week.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>6–7</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Nutrition</div>
+          <h4>Calorie Targets &amp; Food Planning</h4>
+          <p>Calculate your calorie and macro goals. Learn how to use a tracking app, understand deficits and surpluses, and build a food plan that works around your life.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-delay-4">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>8</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Review</div>
+          <h4>Check-in &amp; Next Steps</h4>
+          <p>Review your measurements, food plan, and progress. Ask final questions, get structured feedback, and leave with a clear plan for what comes next on your own terms.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CTA BAND ── -->
+  <div class="cta-band">
+    <h2>Ready to stop guessing?</h2>
+    <a href="contact.html" class="btn-ghost">Get in touch <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:2px"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-brand">Fitness Education · Ross</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="footer-contact">
+      07915 307315 &nbsp;·&nbsp; @fitnesseducation_ross<br>
+      Luxe Gyms Bristol City Centre &amp; Bedminster
+    </div>
+  </footer>
+
+  <!-- ── SCROLL REVEAL ── -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
