@@ -54,32 +54,18 @@
       --c-hero-grad: rgba(30,42,56,0.85), rgba(30,42,56,0.55), rgba(212,120,90,0.20);
     }
 
-    /* Palette 4 — Blush/Sage (Palette 8 from screenshot) */
-    [data-palette="blush"] {
-      --c-dark:      #7A6B8A;
-      --c-mid:       #C9927A;
-      --c-light:     #E8B4A0;
-      --c-muted:     #8FB89A;
-      --c-pale:      #C8E0CE;
-      --c-bg:        #FDF8F5;
-      --c-surface:   #ffffff;
-      --c-dark-bg:   #2A1F1A;
-      --c-body:      #3A2E2A;
-      --c-hero-grad: rgba(42,31,26,0.85), rgba(42,31,26,0.55), rgba(201,146,122,0.20);
-    }
-
-    /* Palette 5 — Teal/Terracotta (Palette 2 from screenshot) */
+    /* Palette 4 — Teal/Terracotta (Palette 2 from screenshot) */
     [data-palette="teal"] {
-      --c-dark:      #2A7A73;
-      --c-mid:       #3D9E96;
-      --c-light:     #6BBDB6;
-      --c-muted:     #8FBFBA;
+      --c-dark:      #C4622D;
+      --c-mid:       #E8956D;
+      --c-light:     #F0AB85;
+      --c-muted:     #6BBDB6;
       --c-pale:      #C2DDD9;
       --c-bg:        #F2F7F7;
       --c-surface:   #ffffff;
       --c-dark-bg:   #1A2E2D;
       --c-body:      #1E3535;
-      --c-hero-grad: rgba(26,46,45,0.87), rgba(26,46,45,0.58), rgba(42,122,115,0.22);
+      --c-hero-grad: rgba(26,46,45,0.87), rgba(26,46,45,0.58), rgba(196,98,45,0.22);
     }
 
     /* Palette 6 — Charcoal & Electric Blue (suggested) */
@@ -121,10 +107,19 @@
       z-index: 999;
       background: var(--c-dark-bg);
       border-radius: 8px;
-      padding: 1rem 1.2rem;
       box-shadow: 0 8px 32px rgba(0,0,0,0.4);
       min-width: 180px;
+      overflow: hidden;
     }
+    .palette-switcher-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .palette-switcher-header:hover { background: rgba(255,255,255,0.04); }
     .palette-switcher-label {
       font-family: var(--font-body);
       font-size: 0.65rem;
@@ -132,8 +127,35 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.45);
-      margin-bottom: 0.75rem;
       display: block;
+      margin: 0;
+    }
+    .palette-switcher-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.75rem;
+      padding: 0;
+      line-height: 1;
+      transition: transform 0.3s ease, color 0.2s;
+      flex-shrink: 0;
+    }
+    .palette-switcher-toggle:hover { color: rgba(255,255,255,0.7); }
+    .palette-switcher.minimised .palette-switcher-toggle {
+      transform: rotate(180deg);
+    }
+    .palette-body {
+      padding: 0 1.2rem 1rem;
+      transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
+      max-height: 400px;
+      opacity: 1;
+      overflow: hidden;
+    }
+    .palette-switcher.minimised .palette-body {
+      max-height: 0;
+      opacity: 0;
+      padding-bottom: 0;
     }
     .palette-options {
       display: flex;
@@ -718,9 +740,13 @@
 <body>
 
   <!-- ── PALETTE SWITCHER ── -->
-  <div class="palette-switcher">
-    <span class="palette-switcher-label">Colour scheme</span>
-    <div class="palette-options">
+  <div class="palette-switcher" id="paletteSwitcher">
+    <div class="palette-switcher-header" id="switcherHeader">
+      <span class="palette-switcher-label">Colour scheme</span>
+      <button class="palette-switcher-toggle" aria-label="Toggle colour panel">▲</button>
+    </div>
+    <div class="palette-body">
+      <div class="palette-options">
       <button class="palette-btn active" data-target="green">
         <div class="palette-swatch">
           <span style="background:#448702"></span>
@@ -748,19 +774,10 @@
         </div>
         <span class="palette-btn-label">Slate</span>
       </button>
-      <button class="palette-btn" data-target="blush">
-        <div class="palette-swatch">
-          <span style="background:#7A6B8A"></span>
-          <span style="background:#C9927A"></span>
-          <span style="background:#8FB89A"></span>
-          <span style="background:#C8E0CE"></span>
-        </div>
-        <span class="palette-btn-label">Blush</span>
-      </button>
       <button class="palette-btn" data-target="teal">
         <div class="palette-swatch">
-          <span style="background:#2A7A73"></span>
-          <span style="background:#3D9E96"></span>
+          <span style="background:#1A2E2D"></span>
+          <span style="background:#C4622D"></span>
           <span style="background:#E8956D"></span>
           <span style="background:#C2DDD9"></span>
         </div>
@@ -776,6 +793,7 @@
         <span class="palette-btn-label">Cobalt ★</span>
       </button>
     </div>
+  </div>
   </div>
 
   <!-- ── NAV ── -->
@@ -988,13 +1006,26 @@
       document.documentElement.setAttribute('data-palette', name);
       btns.forEach(b => b.classList.toggle('active', b.dataset.target === name));
       localStorage.setItem('fe-palette', name);
-      const url = new URL(window.location);
-      url.searchParams.set('palette', name);
-      window.history.replaceState({}, '', url);
+      try {
+        const url = new URL(window.location);
+        url.searchParams.set('palette', name);
+        window.history.replaceState({}, '', url);
+      } catch(e) {}
     }
 
     setPalette(savedPalette);
     btns.forEach(btn => btn.addEventListener('click', () => setPalette(btn.dataset.target)));
+
+    // ── Minimise toggle ───────────────────────────────────────
+    const switcher = document.getElementById('paletteSwitcher');
+    const header   = document.getElementById('switcherHeader');
+    const isMin    = localStorage.getItem('fe-switcher-min') === 'true';
+    if (isMin) switcher.classList.add('minimised');
+
+    header.addEventListener('click', () => {
+      switcher.classList.toggle('minimised');
+      localStorage.setItem('fe-switcher-min', switcher.classList.contains('minimised'));
+    });
 
     // ── Scroll reveal ─────────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');
