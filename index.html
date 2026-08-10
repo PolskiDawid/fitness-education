@@ -68,6 +68,34 @@
       --c-hero-grad: rgba(42,31,26,0.85), rgba(42,31,26,0.55), rgba(201,146,122,0.20);
     }
 
+    /* Palette 5 — Teal/Terracotta (Palette 2 from screenshot) */
+    [data-palette="teal"] {
+      --c-dark:      #2A7A73;
+      --c-mid:       #3D9E96;
+      --c-light:     #6BBDB6;
+      --c-muted:     #8FBFBA;
+      --c-pale:      #C2DDD9;
+      --c-bg:        #F2F7F7;
+      --c-surface:   #ffffff;
+      --c-dark-bg:   #1A2E2D;
+      --c-body:      #1E3535;
+      --c-hero-grad: rgba(26,46,45,0.87), rgba(26,46,45,0.58), rgba(42,122,115,0.22);
+    }
+
+    /* Palette 6 — Charcoal & Electric Blue (suggested) */
+    [data-palette="cobalt"] {
+      --c-dark:      #1A56DB;
+      --c-mid:       #2563EB;
+      --c-light:     #3B82F6;
+      --c-muted:     #93C5FD;
+      --c-pale:      #BFDBFE;
+      --c-bg:        #F0F4FF;
+      --c-surface:   #ffffff;
+      --c-dark-bg:   #0F1623;
+      --c-body:      #1E293B;
+      --c-hero-grad: rgba(15,22,35,0.88), rgba(15,22,35,0.58), rgba(26,86,219,0.22);
+    }
+
     /* ── TOKENS (map vars to semantic names) ────────────────── */
     :root {
       --font-display: 'Barlow Condensed', sans-serif;
@@ -728,6 +756,24 @@
           <span style="background:#C8E0CE"></span>
         </div>
         <span class="palette-btn-label">Blush</span>
+      </button>
+      <button class="palette-btn" data-target="teal">
+        <div class="palette-swatch">
+          <span style="background:#2A7A73"></span>
+          <span style="background:#3D9E96"></span>
+          <span style="background:#E8956D"></span>
+          <span style="background:#C2DDD9"></span>
+        </div>
+        <span class="palette-btn-label">Teal</span>
+      </button>
+      <button class="palette-btn" data-target="cobalt">
+        <div class="palette-swatch">
+          <span style="background:#0F1623"></span>
+          <span style="background:#1A56DB"></span>
+          <span style="background:#3B82F6"></span>
+          <span style="background:#BFDBFE"></span>
+        </div>
+        <span class="palette-btn-label">Cobalt ★</span>
       </button>
     </div>
   </div>
