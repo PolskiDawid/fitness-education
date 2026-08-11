@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Fitness Education with Ross</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ── PALETTES ───────────────────────────────────────────── */
+    :root, [data-palette="green"] {
+      --c-dark:    #448702; --c-mid:     #5D9C1F; --c-light:   #77AB44;
+      --c-muted:   #93B86E; --c-pale:    #B2D4A3; --c-whisper: #DCF0D4;
+      --c-bg:      #F4F7F0; --c-surface: #ffffff; --c-dark-bg: #1A1F17; --c-body: #2E3829;
+    }
+    [data-palette="amber"] {
+      --c-dark:    #C97A10; --c-mid:     #E99644; --c-light:   #F5AD51;
+      --c-muted:   #F5CE6C; --c-pale:    #FFE887; --c-whisper: #FFF4CC;
+      --c-bg:      #FFFBF2; --c-surface: #ffffff; --c-dark-bg: #1C1608; --c-body: #2E2410;
+    }
+    [data-palette="slate"] {
+      --c-dark:    #2E4057; --c-mid:     #D4785A; --c-light:   #E8956D;
+      --c-muted:   #8CA5BC; --c-pale:    #C8D8E8; --c-whisper: #E8EEF4;
+      --c-bg:      #F7F4EF; --c-surface: #ffffff; --c-dark-bg: #1E2A38; --c-body: #2C3340;
+    }
+    [data-palette="teal"] {
+      --c-dark:    #7A3820; --c-mid:     #9C4A28; --c-light:   #B5633D;
+      --c-muted:   #6BBDB6; --c-pale:    #A8D5D1; --c-whisper: #D4EDEB;
+      --c-bg:      #F2F7F7; --c-surface: #ffffff; --c-dark-bg: #1A2E2D; --c-body: #1E3535;
+    }
+    [data-palette="cobalt"] {
+      --c-dark:    #1A56DB; --c-mid:     #2563EB; --c-light:   #3B82F6;
+      --c-muted:   #6EAAFF; --c-pale:    #BFDBFE; --c-whisper: #DBEAFE;
+      --c-bg:      #F0F4FF; --c-surface: #ffffff; --c-dark-bg: #0F1623; --c-body: #1E293B;
+    }
+    [data-palette="coral"] {
+      --c-dark:    #C04B2D; --c-mid:     #D4613F; --c-light:   #E0845D;
+      --c-muted:   #3A6186; --c-pale:    #B8CEDF; --c-whisper: #E8EFF5;
+      --c-bg:      #FAF8F5; --c-surface: #ffffff; --c-dark-bg: #1E2D3D; --c-body: #2C3A48;
+    }
+
+    :root {
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+    }
+
+    /* ── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-body);
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── PALETTE SWITCHER ───────────────────────────────────── */
+    .palette-switcher {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      background: var(--c-dark-bg); border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4); min-width: 180px; overflow: hidden;
+    }
+    .palette-switcher-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.2rem; cursor: pointer; user-select: none;
+    }
+    .palette-switcher-header:hover { background: rgba(255,255,255,0.04); }
+    .palette-switcher-label {
+      font-family: var(--font-body); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.45);
+    }
+    .palette-switcher-toggle {
+      background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.35);
+      font-size: 0.75rem; padding: 0; line-height: 1;
+      transition: transform 0.3s ease, color 0.2s; flex-shrink: 0;
+    }
+    .palette-switcher.minimised .palette-switcher-toggle { transform: rotate(180deg); }
+    .palette-body {
+      padding: 0 1.2rem 1rem;
+      transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
+      max-height: 500px; opacity: 1; overflow: hidden;
+    }
+    .palette-switcher.minimised .palette-body { max-height: 0; opacity: 0; padding-bottom: 0; }
+    .palette-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .palette-btn {
+      display: flex; align-items: center; gap: 0.6rem; background: transparent;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 0.5rem 0.75rem;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s; width: 100%; text-align: left;
+    }
+    .palette-btn:hover { background: rgba(255,255,255,0.08); }
+    .palette-btn.active { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
+    .palette-swatch { display: flex; gap: 2px; flex-shrink: 0; }
+    .palette-swatch span { width: 8px; height: 10px; border-radius: 2px; display: block; }
+    .palette-btn-label {
+      font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
+      color: rgba(255,255,255,0.75); letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    /* ── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 4rem; background: rgba(0,0,0,0.88); backdrop-filter: blur(10px);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; }
+    .nav-logo-svg { width: 52px; height: auto; flex-shrink: 0; }
+    .nav-logo-text {
+      font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+      color: #fff; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1;
+    }
+    .nav-logo-text span {
+      display: block; font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.18em; color: var(--c-muted); text-transform: uppercase;
+    }
+    [data-palette="slate"] .nav-logo-text span,
+    [data-palette="teal"]  .nav-logo-text span,
+    [data-palette="coral"] .nav-logo-text span { color: var(--c-mid); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-pale);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #fff; }
+    .nav-links .nav-cta {
+      background: var(--c-mid); color: #fff; padding: 0.55rem 1.3rem;
+      border-radius: 2px; transition: background 0.2s;
+    }
+    .nav-links .nav-cta:hover { background: var(--c-dark); }
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; background: none; border: none; cursor: pointer; padding: 0.4rem; z-index: 110;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px; background: #fff;
+      border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none; position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.97); backdrop-filter: blur(12px); z-index: 99;
+      padding: 5rem 2rem 2.5rem; flex-direction: column; gap: 0;
+      transform: translateY(-100%); transition: transform 0.35s ease;
+    }
+    .nav-mobile.open { transform: translateY(0); }
+    .nav-mobile li { list-style: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .nav-mobile a {
+      display: block; font-family: var(--font-display); font-size: 1.8rem;
+      font-weight: 700; text-transform: uppercase; color: #fff;
+      text-decoration: none; padding: 1rem 0; transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--c-light); }
+    .nav-mobile .nav-cta-mobile {
+      display: inline-block; margin-top: 1.5rem; background: var(--c-mid);
+      color: #fff; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 1rem 2rem;
+      border-radius: 2px; text-decoration: none; text-align: center; transition: background 0.2s;
+    }
+
+    /* ── PAGE HERO ──────────────────────────────────────────── */
+    .page-hero {
+      position: relative;
+      padding: 9rem 4rem 5rem;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1571388208497-71bedc66e932?w=1800&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      z-index: 0;
+    }
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(0,0,0,0.88) 0%,
+        rgba(0,0,0,0.65) 50%,
+        rgba(0,0,0,0.35) 100%
+      );
+      z-index: 1;
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .page-hero-eyebrow {
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--c-light); margin-bottom: 1rem; display: block;
+    }
+    .page-hero h1 {
+      font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 800; color: #fff; text-transform: uppercase;
+      line-height: 0.95; margin-bottom: 1.5rem; max-width: 700px;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--c-light); }
+    .page-hero p {
+      font-size: 1.1rem; color: rgba(255,255,255,0.72); max-width: 520px;
+      line-height: 1.75; font-weight: 400;
+    }
+
+    /* ── SHARED ─────────────────────────────────────────────── */
+    .section-eyebrow {
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--c-mid); margin-bottom: 0.9rem; display: block;
+    }
+    .section-heading {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--c-dark-bg); line-height: 1.0;
+      text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--c-mid); color: #fff; font-family: var(--font-body);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 1rem 2rem; text-decoration: none;
+      border-radius: 2px; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--c-dark); transform: translateY(-2px); }
+
+    /* ── INTRO SPLIT ────────────────────────────────────────── */
+    .intro-split {
+      padding: 6rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      background: var(--c-bg);
+      transition: background 0.4s;
+    }
+    .intro-split-photo {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: var(--c-dark-bg);
+    }
+    .intro-split-photo img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    /* Accent block behind photo */
+    .intro-split-photo::before {
+      content: '';
+      position: absolute;
+      bottom: -1rem; right: -1rem;
+      width: 60%; height: 40%;
+      background: var(--c-mid);
+      border-radius: 4px;
+      z-index: -1;
+      transition: background 0.4s;
+    }
+    /* Placeholder when no photo */
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem; padding: 2rem; text-align: center;
+    }
+    .photo-placeholder-icon {
+      font-size: 3rem; opacity: 0.2;
+    }
+    .photo-placeholder p {
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+    }
+    .intro-text {}
+    .intro-body {
+      font-size: 1.05rem; line-height: 1.85; color: var(--c-body);
+      margin-bottom: 1.5rem; font-weight: 400;
+    }
+    .intro-body:last-of-type { margin-bottom: 2rem; }
+
+    /* ── PROMISE BAND ───────────────────────────────────────── */
+    .promise-band {
+      background: var(--c-dark);
+      padding: 3rem 4rem;
+      text-align: center;
+      transition: background 0.4s;
+    }
+    .promise-band blockquote {
+      font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700; color: #fff; letter-spacing: 0.02em; text-transform: uppercase;
+    }
+    .promise-band blockquote span { color: var(--c-pale); }
+
+    /* ── PHILOSOPHY SECTION ─────────────────────────────────── */
+    .philosophy {
+      padding: 6rem 4rem;
+      background: var(--c-surface);
+      transition: background 0.4s;
+    }
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .philosophy-card {
+      padding: 2.2rem;
+      background: var(--c-bg);
+      border-radius: 6px;
+      transition: background 0.4s;
+    }
+    .philosophy-card-num {
+      font-family: var(--font-display); font-size: 3.5rem; font-weight: 800;
+      color: var(--c-pale); line-height: 1; margin-bottom: 1rem; display: block;
+      transition: color 0.4s;
+    }
+    .philosophy-card h3 {
+      font-family: var(--font-display); font-size: 1.3rem; font-weight: 700;
+      text-transform: uppercase; color: var(--c-dark-bg); margin-bottom: 0.75rem;
+    }
+    .philosophy-card p {
+      font-size: 0.98rem; line-height: 1.75; color: var(--c-body); opacity: 0.85;
+    }
+
+    /* ── WHAT CLIENTS LEARN ─────────────────────────────────── */
+    .learns {
+      padding: 6rem 4rem;
+      background: var(--c-dark-bg);
+      transition: background 0.4s;
+    }
+    .learns .section-heading { color: #fff; }
+    .learns .section-eyebrow { color: var(--c-light); }
+    .learns-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .learn-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .learn-item:hover { background: rgba(255,255,255,0.07); }
+    .learn-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--c-mid); flex-shrink: 0; margin-top: 0.5rem;
+      transition: background 0.4s;
+    }
+    .learn-item h4 {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+      text-transform: uppercase; color: #fff; margin-bottom: 0.35rem; letter-spacing: 0.03em;
+    }
+    .learn-item p {
+      font-size: 0.9rem; line-height: 1.65; color: rgba(255,255,255,0.55);
+    }
+
+    /* ── LOCATION SECTION ───────────────────────────────────── */
+    .location {
+      padding: 6rem 4rem;
+      background: var(--c-bg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      transition: background 0.4s;
+    }
+    .location-card {
+      background: var(--c-surface);
+      border-radius: 8px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    .location-card h4 {
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+      text-transform: uppercase; color: var(--c-dark-bg);
+    }
+    .location-card p {
+      font-size: 0.92rem; color: var(--c-body); opacity: 0.7; line-height: 1.6;
+    }
+    .location-tag {
+      display: inline-block; font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; color: #fff;
+      background: var(--c-mid); padding: 0.2rem 0.6rem; border-radius: 2px;
+      width: fit-content; transition: background 0.4s;
+    }
+    .location-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+    /* ── CTA BAND ────────────────────────────────────────────── */
+    .cta-band {
+      background: var(--c-mid); padding: 5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 2rem; transition: background 0.4s;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.0; max-width: 500px;
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: #fff; font-family: var(--font-body);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 1rem 2rem; text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.6); border-radius: 2px; white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--c-dark-bg); padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 2rem; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.4s;
+    }
+    .footer-brand {
+      font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+      color: var(--c-muted); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none;
+      letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--c-pale); }
+    .footer-contact { font-size: 0.82rem; color: rgba(255,255,255,0.35); text-align: right; line-height: 1.9; }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: flex; }
+      .page-hero { padding: 7rem 1.5rem 3.5rem; }
+      .intro-split { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+      .intro-split-photo { aspect-ratio: 4 / 3; }
+      .intro-split-photo::before { display: none; }
+      .promise-band { padding: 2.5rem 1.5rem; }
+      .philosophy { padding: 4rem 1.5rem; }
+      .philosophy-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .learns { padding: 4rem 1.5rem; }
+      .learns-grid { grid-template-columns: 1fr; }
+      .location { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+      .cta-band { flex-direction: column; text-align: center; padding: 3.5rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+      .footer-contact { text-align: center; }
+      .palette-switcher { bottom: 1rem; right: 1rem; min-width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── PALETTE SWITCHER ── -->
+  <div class="palette-switcher" id="paletteSwitcher">
+    <div class="palette-switcher-header" id="switcherHeader">
+      <span class="palette-switcher-label">Colour scheme</span>
+      <button class="palette-switcher-toggle" aria-label="Toggle colour panel">▲</button>
+    </div>
+    <div class="palette-body">
+      <div class="palette-options">
+        <button class="palette-btn active" data-target="green">
+          <div class="palette-swatch">
+            <span style="background:#448702"></span><span style="background:#5D9C1F"></span>
+            <span style="background:#77AB44"></span><span style="background:#93B86E"></span>
+            <span style="background:#B2D4A3"></span><span style="background:#DCF0D4"></span>
+          </div>
+          <span class="palette-btn-label">Green</span>
+        </button>
+        <button class="palette-btn" data-target="amber">
+          <div class="palette-swatch">
+            <span style="background:#C97A10"></span><span style="background:#E99644"></span>
+            <span style="background:#F5AD51"></span><span style="background:#F5CE6C"></span>
+            <span style="background:#FFE887"></span><span style="background:#FFF4CC"></span>
+          </div>
+          <span class="palette-btn-label">Amber</span>
+        </button>
+        <button class="palette-btn" data-target="slate">
+          <div class="palette-swatch">
+            <span style="background:#2E4057"></span><span style="background:#D4785A"></span>
+            <span style="background:#E8956D"></span><span style="background:#8CA5BC"></span>
+            <span style="background:#C8D8E8"></span><span style="background:#E8EEF4"></span>
+          </div>
+          <span class="palette-btn-label">Slate</span>
+        </button>
+        <button class="palette-btn" data-target="teal">
+          <div class="palette-swatch">
+            <span style="background:#1A2E2D"></span><span style="background:#9C4A28"></span>
+            <span style="background:#B5633D"></span><span style="background:#6BBDB6"></span>
+            <span style="background:#A8D5D1"></span><span style="background:#D4EDEB"></span>
+          </div>
+          <span class="palette-btn-label">Teal</span>
+        </button>
+        <button class="palette-btn" data-target="cobalt">
+          <div class="palette-swatch">
+            <span style="background:#0F1623"></span><span style="background:#1A56DB"></span>
+            <span style="background:#3B82F6"></span><span style="background:#6EAAFF"></span>
+            <span style="background:#BFDBFE"></span><span style="background:#DBEAFE"></span>
+          </div>
+          <span class="palette-btn-label">Cobalt ★</span>
+        </button>
+        <button class="palette-btn" data-target="coral">
+          <div class="palette-swatch">
+            <span style="background:#1E2D3D"></span><span style="background:#C04B2D"></span>
+            <span style="background:#D4613F"></span><span style="background:#3A6186"></span>
+            <span style="background:#B8CEDF"></span><span style="background:#E8EFF5"></span>
+          </div>
+          <span class="palette-btn-label">Coral</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.48 28.8">
+        <path fill="#ffffff" d="M24.39,18.06l-15.27.02-4.6,10.65c-1.61.09-2.98.11-4.51-.01L8.25,9.93c1.74-3.95,5.63-7.05,9.92-7.14l10.88-.22c.72-.01,1.36-.33,2.2-.63l-2.55,5.9h-10.26c-3.35.01-6.3,2.02-7.02,5.46l12.75-.02c.85,0,1.6-.26,2.52-.54l-2.3,5.33ZM56.48.06l-23.11-.06-2.53,5.96c.54-.19,1.18-.64,1.69-.64l19.27-.15c2.74-.02,4.77-2.64,4.68-5.12ZM47.01,10.76l-18.15.02-2.42,5.57c1.38-.53,2.21-.54,3.38-.54l11.31.03c3.16,0,5.78-1.75,5.89-5.09ZM34.95,21.26l-10.61-.02-2.44,5.87c1.46-.47,2.59-.58,4.21-.5,3.87.18,7.54-1.76,8.85-5.36Z"/>
+      </svg>
+      <div class="nav-logo-text">Fitness Education<span>with Ross</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Get in touch</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <ul class="nav-mobile" id="mobileNav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="nav-cta-mobile">Get in touch</a></li>
+  </ul>
+
+  <!-- ── PAGE HERO ── -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <!-- <video class="page-hero-video" autoplay muted loop playsinline src=""></video> -->
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <span class="page-hero-eyebrow">The coach</span>
+      <h1>Coaching built on<br><em>education,</em><br>not dependency.</h1>
+    </div>
+  </div>
+
+  <!-- ── INTRO SPLIT ── -->
+  <div class="intro-split">
+    <div class="intro-split-photo reveal">
+      <!-- Replace with Ross's actual photo: <img src="ross.jpg" alt="Ross"> -->
+      <div class="photo-placeholder">
+        <div class="photo-placeholder-icon">📷</div>
+        <p>Add photo of Ross here</p>
+      </div>
+    </div>
+    <div class="intro-text reveal reveal-delay-1">
+      <div class="section-eyebrow">About Ross</div>
+      <h2 class="section-heading">A calm, patient,<br>no-nonsense coach.</h2>
+      <p class="intro-body">I'm a personal trainer based in Bristol, working out of Luxe Gyms in the City Centre and Bedminster. My focus is on creating a comprehensive coaching environment to best aid your development, both inside the gym and at home.</p>
+      <p class="intro-body">My approach is straightforward: I'm not here to keep you reliant on a coach. I want to give you the knowledge, habits, and confidence to train for the rest of your life, on your own terms.</p>
+      <p class="intro-body">It's not about quick fixes. It's about ensuring you know the what, why, and how of your transformation.</p>
+      <a href="contact.html" class="btn-primary">Work with me <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+
+  <!-- ── PROMISE BAND ── -->
+  <div class="promise-band">
+    <blockquote>"I'll be the <span>last coach</span> you'll ever have to hire."</blockquote>
+  </div>
+
+  <!-- ── PHILOSOPHY ── -->
+  <section class="philosophy">
+    <div class="section-eyebrow">How I work</div>
+    <h2 class="section-heading">The approach.</h2>
+    <div class="philosophy-grid">
+      <div class="philosophy-card reveal">
+        <span class="philosophy-card-num">01</span>
+        <h3>Education first</h3>
+        <p>Every session comes with the reasoning behind it. You'll always know what we're doing, why we're doing it, and how it's moving you toward your goal.</p>
+      </div>
+      <div class="philosophy-card reveal reveal-delay-1">
+        <span class="philosophy-card-num">02</span>
+        <h3>No quick fixes</h3>
+        <p>I'm not interested in results that don't last. The focus is on building real understanding, real habits, and real progress that continues long after coaching ends.</p>
+      </div>
+      <div class="philosophy-card reveal reveal-delay-2">
+        <span class="philosophy-card-num">03</span>
+        <h3>Built around you</h3>
+        <p>Every programme is written around your goals, your schedule, and your starting point. There's no one-size-fits-all approach here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHAT CLIENTS LEARN ── -->
+  <section class="learns">
+    <div class="section-eyebrow">The knowledge you keep</div>
+    <h2 class="section-heading">What every client<br>walks away with.</h2>
+    <div class="learns-grid">
+      <div class="learn-item reveal">
+        <div class="learn-dot"></div>
+        <div>
+          <h4>Measurements that matter</h4>
+          <p>Which metrics to track, how to take them accurately, and how to know if what you're doing is actually working.</p>
+        </div>
+      </div>
+      <div class="learn-item reveal reveal-delay-1">
+        <div class="learn-dot"></div>
+        <div>
+          <h4>Correct movement patterns</h4>
+          <p>How to push, pull, squat, and hinge correctly, the four patterns behind every effective training session.</p>
+        </div>
+      </div>
+      <div class="learn-item reveal">
+        <div class="learn-dot"></div>
+        <div>
+          <h4>A programme you built</h4>
+          <p>How to structure resistance and cardio sessions around your goals, and how to keep them progressing over time.</p>
+        </div>
+      </div>
+      <div class="learn-item reveal reveal-delay-1">
+        <div class="learn-dot"></div>
+        <div>
+          <h4>Nutrition that works</h4>
+          <p>How to calculate your calorie targets, track your food, and build a plan that fits around your actual life.</p>
+        </div>
+      </div>
+      <div class="learn-item reveal">
+        <div class="learn-dot"></div>
+        <div>
+          <h4>How to keep progressing</h4>
+          <p>The tools and understanding to carry on making progress long after our eight weeks together are done.</p>
+        </div>
+      </div>
+      <div class="learn-item reveal reveal-delay-1">
+        <div class="learn-dot"></div>
+        <div>
+          <h4>Confidence in the gym</h4>
+          <p>The ability to walk into any gym and know exactly what you're doing, why you're doing it, and how to improve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LOCATION ── -->
+  <div class="location">
+    <div class="reveal">
+      <div class="section-eyebrow">Where to find me</div>
+      <h2 class="section-heading">Based in Bristol.</h2>
+      <p style="font-size:1rem;line-height:1.75;opacity:0.8;margin-bottom:2rem;">In-person sessions take place at Luxe Gyms across Bristol. Online coaching is available to anyone with a gym membership, anywhere.</p>
+      <a href="contact.html" class="btn-primary">Get in touch <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="location-cards reveal reveal-delay-1">
+      <div class="location-card">
+        <div class="location-tag">In person</div>
+        <h4>Luxe Gyms — City Centre</h4>
+        <p>Bristol City Centre</p>
+      </div>
+      <div class="location-card">
+        <div class="location-tag">In person</div>
+        <h4>Luxe Gyms — Bedminster</h4>
+        <p>Bedminster, Bristol</p>
+      </div>
+      <div class="location-card">
+        <div class="location-tag">Remote</div>
+        <h4>Online Coaching</h4>
+        <p>Available to anyone with a gym membership, anywhere in the UK.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-band">
+    <h2>Ready to get started?</h2>
+    <a href="contact.html" class="btn-ghost">Get in touch <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:2px"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-brand">Fitness Education · Ross</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="footer-contact">
+      07915 307315 &nbsp;·&nbsp; @fitnesseducation_ross<br>
+      Luxe Gyms Bristol · City Centre &amp; Bedminster
+    </div>
+  </footer>
+
+  <script>
+    // ── Hamburger ─────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }));
+
+    // ── Palette switcher ──────────────────────────────────────
+    const btns = document.querySelectorAll('.palette-btn');
+    const savedPalette = new URLSearchParams(window.location.search).get('palette') || localStorage.getItem('fe-palette') || 'green';
+    function setPalette(name) {
+      document.documentElement.setAttribute('data-palette', name);
+      btns.forEach(b => b.classList.toggle('active', b.dataset.target === name));
+      localStorage.setItem('fe-palette', name);
+      try {
+        const url = new URL(window.location);
+        url.searchParams.set('palette', name);
+        window.history.replaceState({}, '', url);
+      } catch(e) {}
+    }
+    setPalette(savedPalette);
+    btns.forEach(btn => btn.addEventListener('click', () => setPalette(btn.dataset.target)));
+
+    // ── Minimise toggle ───────────────────────────────────────
+    const switcher = document.getElementById('paletteSwitcher');
+    const header   = document.getElementById('switcherHeader');
+    const isMin    = localStorage.getItem('fe-switcher-min') === 'true';
+    if (isMin) switcher.classList.add('minimised');
+    header.addEventListener('click', () => {
+      switcher.classList.toggle('minimised');
+      localStorage.setItem('fe-switcher-min', switcher.classList.contains('minimised'));
+    });
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>

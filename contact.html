@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Fitness Education with Ross</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ── PALETTES ───────────────────────────────────────────── */
+    :root, [data-palette="green"] {
+      --c-dark:    #448702; --c-mid:     #5D9C1F; --c-light:   #77AB44;
+      --c-muted:   #93B86E; --c-pale:    #B2D4A3; --c-whisper: #DCF0D4;
+      --c-bg:      #F4F7F0; --c-surface: #ffffff; --c-dark-bg: #1A1F17; --c-body: #2E3829;
+    }
+    [data-palette="amber"] {
+      --c-dark:    #C97A10; --c-mid:     #E99644; --c-light:   #F5AD51;
+      --c-muted:   #F5CE6C; --c-pale:    #FFE887; --c-whisper: #FFF4CC;
+      --c-bg:      #FFFBF2; --c-surface: #ffffff; --c-dark-bg: #1C1608; --c-body: #2E2410;
+    }
+    [data-palette="slate"] {
+      --c-dark:    #2E4057; --c-mid:     #D4785A; --c-light:   #E8956D;
+      --c-muted:   #8CA5BC; --c-pale:    #C8D8E8; --c-whisper: #E8EEF4;
+      --c-bg:      #F7F4EF; --c-surface: #ffffff; --c-dark-bg: #1E2A38; --c-body: #2C3340;
+    }
+    [data-palette="teal"] {
+      --c-dark:    #7A3820; --c-mid:     #9C4A28; --c-light:   #B5633D;
+      --c-muted:   #6BBDB6; --c-pale:    #A8D5D1; --c-whisper: #D4EDEB;
+      --c-bg:      #F2F7F7; --c-surface: #ffffff; --c-dark-bg: #1A2E2D; --c-body: #1E3535;
+    }
+    [data-palette="cobalt"] {
+      --c-dark:    #1A56DB; --c-mid:     #2563EB; --c-light:   #3B82F6;
+      --c-muted:   #6EAAFF; --c-pale:    #BFDBFE; --c-whisper: #DBEAFE;
+      --c-bg:      #F0F4FF; --c-surface: #ffffff; --c-dark-bg: #0F1623; --c-body: #1E293B;
+    }
+    [data-palette="coral"] {
+      --c-dark:    #C04B2D; --c-mid:     #D4613F; --c-light:   #E0845D;
+      --c-muted:   #3A6186; --c-pale:    #B8CEDF; --c-whisper: #E8EFF5;
+      --c-bg:      #FAF8F5; --c-surface: #ffffff; --c-dark-bg: #1E2D3D; --c-body: #2C3A48;
+    }
+
+    :root {
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+    }
+
+    /* ── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-body);
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── PALETTE SWITCHER ───────────────────────────────────── */
+    .palette-switcher {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      background: var(--c-dark-bg); border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4); min-width: 180px; overflow: hidden;
+    }
+    .palette-switcher-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.2rem; cursor: pointer; user-select: none;
+    }
+    .palette-switcher-header:hover { background: rgba(255,255,255,0.04); }
+    .palette-switcher-label {
+      font-family: var(--font-body); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.45);
+    }
+    .palette-switcher-toggle {
+      background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.35);
+      font-size: 0.75rem; padding: 0; line-height: 1;
+      transition: transform 0.3s ease, color 0.2s; flex-shrink: 0;
+    }
+    .palette-switcher.minimised .palette-switcher-toggle { transform: rotate(180deg); }
+    .palette-body {
+      padding: 0 1.2rem 1rem;
+      transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
+      max-height: 500px; opacity: 1; overflow: hidden;
+    }
+    .palette-switcher.minimised .palette-body { max-height: 0; opacity: 0; padding-bottom: 0; }
+    .palette-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .palette-btn {
+      display: flex; align-items: center; gap: 0.6rem; background: transparent;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 0.5rem 0.75rem;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s; width: 100%; text-align: left;
+    }
+    .palette-btn:hover { background: rgba(255,255,255,0.08); }
+    .palette-btn.active { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
+    .palette-swatch { display: flex; gap: 2px; flex-shrink: 0; }
+    .palette-swatch span { width: 8px; height: 10px; border-radius: 2px; display: block; }
+    .palette-btn-label {
+      font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
+      color: rgba(255,255,255,0.75); letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    /* ── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 4rem; background: rgba(0,0,0,0.88); backdrop-filter: blur(10px);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; }
+    .nav-logo-svg { width: 52px; height: auto; flex-shrink: 0; }
+    .nav-logo-text {
+      font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+      color: #fff; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1;
+    }
+    .nav-logo-text span {
+      display: block; font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.18em; color: var(--c-muted); text-transform: uppercase;
+    }
+    [data-palette="slate"] .nav-logo-text span,
+    [data-palette="teal"]  .nav-logo-text span,
+    [data-palette="coral"] .nav-logo-text span { color: var(--c-mid); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-pale);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #fff; }
+    .nav-links .nav-cta {
+      background: var(--c-mid); color: #fff; padding: 0.55rem 1.3rem;
+      border-radius: 2px; transition: background 0.2s;
+    }
+    .nav-links .nav-cta:hover { background: var(--c-dark); }
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; background: none; border: none; cursor: pointer; padding: 0.4rem; z-index: 110;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px; background: #fff;
+      border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none; position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.97); backdrop-filter: blur(12px); z-index: 99;
+      padding: 5rem 2rem 2.5rem; flex-direction: column; gap: 0;
+      transform: translateY(-100%); transition: transform 0.35s ease;
+    }
+    .nav-mobile.open { transform: translateY(0); }
+    .nav-mobile li { list-style: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .nav-mobile a {
+      display: block; font-family: var(--font-display); font-size: 1.8rem;
+      font-weight: 700; text-transform: uppercase; color: #fff;
+      text-decoration: none; padding: 1rem 0; transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--c-light); }
+    .nav-mobile .nav-cta-mobile {
+      display: inline-block; margin-top: 1.5rem; background: var(--c-mid);
+      color: #fff; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 1rem 2rem;
+      border-radius: 2px; text-decoration: none; text-align: center; transition: background 0.2s;
+    }
+
+    /* ── PAGE HERO ──────────────────────────────────────────── */
+    .page-hero {
+      position: relative;
+      padding: 9rem 4rem 5rem;
+      overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=1800&q=80');
+      background-size: cover;
+      background-position: center 40%;
+      z-index: 0;
+    }
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.35) 100%);
+      z-index: 1;
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .page-hero-eyebrow {
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--c-light); margin-bottom: 1rem; display: block;
+    }
+    .page-hero h1 {
+      font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 800; color: #fff; text-transform: uppercase;
+      line-height: 0.95; margin-bottom: 1.2rem; max-width: 700px;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--c-light); }
+    .page-hero p {
+      font-size: 1.1rem; color: rgba(255,255,255,0.72); max-width: 480px;
+      line-height: 1.75; font-weight: 400;
+    }
+
+    /* ── MAIN CONTACT SECTION ───────────────────────────────── */
+    .contact-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+
+    /* Left — form */
+    .contact-form-side {
+      padding: 5rem 4rem;
+      background: var(--c-surface);
+      transition: background 0.4s;
+    }
+    .section-eyebrow {
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--c-mid); margin-bottom: 0.9rem; display: block;
+    }
+    .section-heading {
+      font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800; color: var(--c-dark-bg); line-height: 1.0;
+      text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .form-intro {
+      font-size: 1rem; line-height: 1.7; color: var(--c-body);
+      opacity: 0.75; margin-bottom: 2.5rem;
+    }
+
+    /* Form elements */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--c-body); opacity: 0.7;
+    }
+    input, select, textarea {
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      font-weight: 400;
+      color: var(--c-body);
+      background: var(--c-bg);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 4px;
+      padding: 0.85rem 1rem;
+      width: 100%;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--c-mid);
+      box-shadow: 0 0 0 3px var(--c-whisper);
+      background: var(--c-surface);
+    }
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+    .btn-submit {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--c-mid); color: #fff; font-family: var(--font-body);
+      font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 1.1rem 2.2rem;
+      border: none; border-radius: 2px; cursor: pointer; width: 100%;
+      justify-content: center; transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+    }
+    .btn-submit:hover { background: var(--c-dark); transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .form-success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .form-success h3 {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 800;
+      text-transform: uppercase; color: var(--c-dark-bg); margin-bottom: 0.75rem;
+    }
+    .form-success p {
+      font-size: 1rem; color: var(--c-body); opacity: 0.75; line-height: 1.7;
+    }
+
+    /* Right — info panel */
+    .contact-info-side {
+      padding: 5rem 4rem;
+      background: var(--c-dark-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background 0.4s;
+    }
+    .contact-info-heading {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3); margin-bottom: 2.5rem;
+    }
+    .contact-detail {
+      margin-bottom: 2.5rem;
+    }
+    .contact-detail-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--c-light);
+      margin-bottom: 0.4rem; display: block; transition: color 0.4s;
+    }
+    .contact-detail-value {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+      color: #fff; text-decoration: none; display: block; line-height: 1.2;
+      transition: color 0.2s;
+    }
+    a.contact-detail-value:hover { color: var(--c-light); }
+    .contact-detail-sub {
+      font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem;
+    }
+
+    /* Location cards in info panel */
+    .contact-locations {
+      margin-top: auto;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .contact-location-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--c-light); margin-bottom: 1rem; display: block;
+      transition: color 0.4s;
+    }
+    .contact-location-items {
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .contact-location-item {
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .contact-location-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--c-mid); flex-shrink: 0; transition: background 0.4s;
+    }
+    .contact-location-item span {
+      font-size: 0.92rem; color: rgba(255,255,255,0.65); font-weight: 400;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--c-dark-bg); padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 2rem; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.4s;
+    }
+    .footer-brand {
+      font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+      color: var(--c-muted); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none;
+      letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--c-pale); }
+    .footer-contact { font-size: 0.82rem; color: rgba(255,255,255,0.35); text-align: right; line-height: 1.9; }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: flex; }
+      .page-hero { padding: 7rem 1.5rem 3.5rem; }
+      .contact-section { grid-template-columns: 1fr; }
+      .contact-form-side { padding: 3.5rem 1.5rem; }
+      .contact-info-side { padding: 3.5rem 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+      .footer-contact { text-align: center; }
+      .palette-switcher { bottom: 1rem; right: 1rem; min-width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── PALETTE SWITCHER ── -->
+  <div class="palette-switcher" id="paletteSwitcher">
+    <div class="palette-switcher-header" id="switcherHeader">
+      <span class="palette-switcher-label">Colour scheme</span>
+      <button class="palette-switcher-toggle" aria-label="Toggle colour panel">▲</button>
+    </div>
+    <div class="palette-body">
+      <div class="palette-options">
+        <button class="palette-btn active" data-target="green">
+          <div class="palette-swatch">
+            <span style="background:#448702"></span><span style="background:#5D9C1F"></span>
+            <span style="background:#77AB44"></span><span style="background:#93B86E"></span>
+            <span style="background:#B2D4A3"></span><span style="background:#DCF0D4"></span>
+          </div>
+          <span class="palette-btn-label">Green</span>
+        </button>
+        <button class="palette-btn" data-target="amber">
+          <div class="palette-swatch">
+            <span style="background:#C97A10"></span><span style="background:#E99644"></span>
+            <span style="background:#F5AD51"></span><span style="background:#F5CE6C"></span>
+            <span style="background:#FFE887"></span><span style="background:#FFF4CC"></span>
+          </div>
+          <span class="palette-btn-label">Amber</span>
+        </button>
+        <button class="palette-btn" data-target="slate">
+          <div class="palette-swatch">
+            <span style="background:#2E4057"></span><span style="background:#D4785A"></span>
+            <span style="background:#E8956D"></span><span style="background:#8CA5BC"></span>
+            <span style="background:#C8D8E8"></span><span style="background:#E8EEF4"></span>
+          </div>
+          <span class="palette-btn-label">Slate</span>
+        </button>
+        <button class="palette-btn" data-target="teal">
+          <div class="palette-swatch">
+            <span style="background:#1A2E2D"></span><span style="background:#9C4A28"></span>
+            <span style="background:#B5633D"></span><span style="background:#6BBDB6"></span>
+            <span style="background:#A8D5D1"></span><span style="background:#D4EDEB"></span>
+          </div>
+          <span class="palette-btn-label">Teal</span>
+        </button>
+        <button class="palette-btn" data-target="cobalt">
+          <div class="palette-swatch">
+            <span style="background:#0F1623"></span><span style="background:#1A56DB"></span>
+            <span style="background:#3B82F6"></span><span style="background:#6EAAFF"></span>
+            <span style="background:#BFDBFE"></span><span style="background:#DBEAFE"></span>
+          </div>
+          <span class="palette-btn-label">Cobalt ★</span>
+        </button>
+        <button class="palette-btn" data-target="coral">
+          <div class="palette-swatch">
+            <span style="background:#1E2D3D"></span><span style="background:#C04B2D"></span>
+            <span style="background:#D4613F"></span><span style="background:#3A6186"></span>
+            <span style="background:#B8CEDF"></span><span style="background:#E8EFF5"></span>
+          </div>
+          <span class="palette-btn-label">Coral</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.48 28.8">
+        <path fill="#ffffff" d="M24.39,18.06l-15.27.02-4.6,10.65c-1.61.09-2.98.11-4.51-.01L8.25,9.93c1.74-3.95,5.63-7.05,9.92-7.14l10.88-.22c.72-.01,1.36-.33,2.2-.63l-2.55,5.9h-10.26c-3.35.01-6.3,2.02-7.02,5.46l12.75-.02c.85,0,1.6-.26,2.52-.54l-2.3,5.33ZM56.48.06l-23.11-.06-2.53,5.96c.54-.19,1.18-.64,1.69-.64l19.27-.15c2.74-.02,4.77-2.64,4.68-5.12ZM47.01,10.76l-18.15.02-2.42,5.57c1.38-.53,2.21-.54,3.38-.54l11.31.03c3.16,0,5.78-1.75,5.89-5.09ZM34.95,21.26l-10.61-.02-2.44,5.87c1.46-.47,2.59-.58,4.21-.5,3.87.18,7.54-1.76,8.85-5.36Z"/>
+      </svg>
+      <div class="nav-logo-text">Fitness Education<span>with Ross</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta active">Get in touch</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <ul class="nav-mobile" id="mobileNav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="nav-cta-mobile">Get in touch</a></li>
+  </ul>
+
+  <!-- ── PAGE HERO ── -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <!-- <video class="page-hero-video" autoplay muted loop playsinline src=""></video> -->
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <span class="page-hero-eyebrow">Get in touch</span>
+      <h1>Let's have<br>a <em>chat.</em></h1>
+      <p>No commitment, no pressure. Just an initial conversation to see if we're a good fit.</p>
+    </div>
+  </div>
+
+  <!-- ── CONTACT SECTION ── -->
+  <div class="contact-section">
+
+    <!-- Form side -->
+    <div class="contact-form-side reveal">
+      <div class="section-eyebrow">Send a message</div>
+      <h2 class="section-heading">Tell me a bit<br>about yourself.</h2>
+      <p class="form-intro">Fill in the form and I'll get back to you as soon as I can. If you're not sure which service is right for you, just say so — we'll figure it out together.</p>
+
+      <!--
+        FORMSPREE SETUP:
+        1. Go to formspree.io and create a free account
+        2. Create a new form and copy your form ID
+        3. Replace YOUR_FORM_ID in the action URL below
+        e.g. action="https://formspree.io/f/abcdefgh"
+      -->
+      <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="First and last name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone number <span style="opacity:0.5;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="07700 000000" />
+        </div>
+
+        <div class="form-group">
+          <label for="service">Which service are you interested in?</label>
+          <select id="service" name="service" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="1:1 Personal Training">1:1 Personal Training</option>
+            <option value="2:1 Partner Training">2:1 Partner Training</option>
+            <option value="Online Coaching">Online Coaching</option>
+            <option value="Drop-in Session">Drop-in Session</option>
+            <option value="Programme Writing">Programme Writing</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Anything else you'd like to share?</label>
+          <textarea id="message" name="message" placeholder="Tell me about your goals, where you're starting from, or anything else that feels relevant."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Send message
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+      </form>
+
+      <!-- Success state shown after submission -->
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">✓</div>
+        <h3>Message sent.</h3>
+        <p>I'll be in touch as soon as I can. Looking forward to speaking with you.</p>
+      </div>
+
+    </div>
+
+    <!-- Info side -->
+    <div class="contact-info-side reveal reveal-delay-1">
+      <div>
+        <p class="contact-info-heading">Contact details</p>
+
+        <div class="contact-detail">
+          <span class="contact-detail-label">Phone</span>
+          <a href="tel:07915307315" class="contact-detail-value">07915 307315</a>
+          <p class="contact-detail-sub">Call or text any time</p>
+        </div>
+
+        <div class="contact-detail">
+          <span class="contact-detail-label">Instagram</span>
+          <a href="https://instagram.com/fitnesseducation_ross" target="_blank" rel="noopener" class="contact-detail-value">@fitnesseducation_ross</a>
+          <p class="contact-detail-sub">DMs are always open</p>
+        </div>
+
+        <div class="contact-detail">
+          <span class="contact-detail-label">Response time</span>
+          <span class="contact-detail-value" style="font-size:1.2rem;opacity:0.85;">Within 24 hours</span>
+          <p class="contact-detail-sub">Usually much sooner</p>
+        </div>
+      </div>
+
+      <div class="contact-locations">
+        <span class="contact-location-label">Where to find me</span>
+        <div class="contact-location-items">
+          <div class="contact-location-item">
+            <div class="contact-location-dot"></div>
+            <span>Luxe Gyms, Bristol City Centre</span>
+          </div>
+          <div class="contact-location-item">
+            <div class="contact-location-dot"></div>
+            <span>Luxe Gyms, Bedminster</span>
+          </div>
+          <div class="contact-location-item">
+            <div class="contact-location-dot"></div>
+            <span>Online, anywhere in the UK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-brand">Fitness Education · Ross</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="footer-contact">
+      07915 307315 &nbsp;·&nbsp; @fitnesseducation_ross<br>
+      Luxe Gyms Bristol · City Centre &amp; Bedminster
+    </div>
+  </footer>
+
+  <script>
+    // ── Hamburger ─────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }));
+
+    // ── Palette switcher ──────────────────────────────────────
+    const btns = document.querySelectorAll('.palette-btn');
+    const savedPalette = new URLSearchParams(window.location.search).get('palette') || localStorage.getItem('fe-palette') || 'green';
+    function setPalette(name) {
+      document.documentElement.setAttribute('data-palette', name);
+      btns.forEach(b => b.classList.toggle('active', b.dataset.target === name));
+      localStorage.setItem('fe-palette', name);
+      try {
+        const url = new URL(window.location);
+        url.searchParams.set('palette', name);
+        window.history.replaceState({}, '', url);
+      } catch(e) {}
+    }
+    setPalette(savedPalette);
+    btns.forEach(btn => btn.addEventListener('click', () => setPalette(btn.dataset.target)));
+
+    // ── Minimise toggle ───────────────────────────────────────
+    const switcher = document.getElementById('paletteSwitcher');
+    const header   = document.getElementById('switcherHeader');
+    const isMin    = localStorage.getItem('fe-switcher-min') === 'true';
+    if (isMin) switcher.classList.add('minimised');
+    header.addEventListener('click', () => {
+      switcher.classList.toggle('minimised');
+      localStorage.setItem('fe-switcher-min', switcher.classList.contains('minimised'));
+    });
+
+    // ── Form success state ────────────────────────────────────
+    const form    = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST', body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        }
+      } catch(err) {
+        // Fallback — let the form submit normally if fetch fails
+        form.submit();
+      }
+    });
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
