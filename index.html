@@ -241,6 +241,7 @@
       align-items: center;
       gap: 0.75rem;
       text-decoration: none;
+      flex-shrink: 0;
     }
     .nav-logo-svg { width: 52px; height: auto; flex-shrink: 0; }
     .nav-logo-text {
@@ -265,6 +266,8 @@
     [data-palette="coral"] .nav-logo-text span {
       color: var(--c-mid);
     }
+
+    /* Desktop nav links */
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
     .nav-links a {
       font-family: var(--font-body);
@@ -285,6 +288,78 @@
       transition: background 0.2s;
     }
     .nav-links .nav-cta:hover { background: var(--c-dark); }
+
+    /* Hamburger button — hidden on desktop */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      z-index: 110;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    /* Animate to X when open */
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav drawer */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.97);
+      backdrop-filter: blur(12px);
+      z-index: 99;
+      padding: 5rem 2rem 2.5rem;
+      flex-direction: column;
+      gap: 0;
+      transform: translateY(-100%);
+      transition: transform 0.35s ease;
+    }
+    .nav-mobile.open { transform: translateY(0); }
+    .nav-mobile li { list-style: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .nav-mobile a {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 1rem 0;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--c-light); }
+    .nav-mobile .nav-cta-mobile {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: var(--c-mid);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .nav-mobile .nav-cta-mobile:hover { background: var(--c-dark); }
 
     /* ── HERO ───────────────────────────────────────────────── */
     .hero {
@@ -746,12 +821,24 @@
 
     /* ── RESPONSIVE ──────────────────────────────────────────── */
     @media (max-width: 960px) {
+      /* Nav — show hamburger, hide desktop links */
       nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: flex; }
+
+      /* Hero */
       .hero { padding: 6rem 1.5rem 3rem; align-items: flex-start; }
       .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .hero-stats { grid-template-columns: 1fr 1fr; justify-self: stretch; }
-      .hero-stat { width: 100%; height: 150px; }
+
+      /* Stat tiles — 2x2, square, properly contained */
+      .hero-stats { grid-template-columns: 1fr 1fr; justify-self: stretch; gap: 0.75rem; }
+      .hero-stat { width: 100%; height: auto; aspect-ratio: 1 / 1; padding: 1.2rem; }
+      .hero-stat-number { font-size: clamp(1.6rem, 8vw, 2.6rem); margin-bottom: 0.3rem; }
+      .hero-stat-number[style] { font-size: clamp(1.1rem, 5vw, 1.6rem) !important; }
+      .hero-stat-label { font-size: 0.65rem; letter-spacing: 0.06em; }
+
+      /* Sections */
       section { padding: 4rem 1.5rem; }
       .audience-grid { grid-template-columns: 1fr; }
       .audience-card { height: 320px; }
@@ -763,7 +850,11 @@
       .timeline-item { grid-template-columns: 80px 1fr; }
       .timeline-item::before { left: 71px; }
       .timeline-week-label strong { font-size: 1.4rem; }
-      .palette-switcher { bottom: 1rem; right: 1rem; }
+      .palette-switcher { bottom: 1rem; right: 1rem; min-width: 160px; }
+    }
+    @media (max-width: 480px) {
+      .hero-stat-number { font-size: clamp(1.4rem, 7vw, 2rem); }
+      .promise-band { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
@@ -858,13 +949,28 @@
         <span>with Ross</span>
       </div>
     </a>
+    <!-- Desktop links -->
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html" class="nav-cta">Get in touch</a></li>
     </ul>
+    <!-- Hamburger toggle -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
+
+  <!-- Mobile nav drawer -->
+  <ul class="nav-mobile" id="mobileNav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="nav-cta-mobile">Get in touch</a></li>
+  </ul>
 
   <!-- ── HERO ── -->
   <div class="hero">
@@ -1049,6 +1155,21 @@
 
   <!-- ── SCRIPTS ── -->
   <script>
+    // ── Hamburger menu ────────────────────────────────────────
+    const hamburger  = document.getElementById('hamburger');
+    const mobileNav  = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    // Close on link click
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }));
+
     // ── Palette switcher ──────────────────────────────────────
     const btns = document.querySelectorAll('.palette-btn');
     const savedPalette = new URLSearchParams(window.location.search).get('palette') || localStorage.getItem('fe-palette') || 'green';
