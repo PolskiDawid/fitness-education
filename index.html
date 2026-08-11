@@ -600,8 +600,7 @@
       background: var(--c-surface);
       border-radius: 6px;
       padding: 2.5rem 2rem;
-      border-top: 3px solid var(--c-whisper);
-      transition: background 0.4s, border-color 0.4s;
+      transition: background 0.4s;
     }
     .how-card-num {
       font-family: var(--font-display);
@@ -831,12 +830,12 @@
       .hero { padding: 6rem 1.5rem 3rem; align-items: flex-start; }
       .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
 
-      /* Stat tiles — 2x2, square, properly contained */
+      /* Stat tiles — 2x2 rectangles on mobile */
       .hero-stats { grid-template-columns: 1fr 1fr; justify-self: stretch; gap: 0.75rem; }
-      .hero-stat { width: 100%; height: auto; aspect-ratio: 1 / 1; padding: 1.2rem; }
-      .hero-stat-number { font-size: clamp(1.6rem, 8vw, 2.6rem); margin-bottom: 0.3rem; }
-      .hero-stat-number[style] { font-size: clamp(1.1rem, 5vw, 1.6rem) !important; }
-      .hero-stat-label { font-size: 0.65rem; letter-spacing: 0.06em; }
+      .hero-stat { width: 100%; height: 130px; aspect-ratio: unset; padding: 1.2rem 1.4rem; }
+      .hero-stat-number { font-size: 2.4rem; margin-bottom: 0.25rem; }
+      .hero-stat-number[style] { font-size: 1.5rem !important; line-height: 1.15 !important; }
+      .hero-stat-label { font-size: 0.7rem; letter-spacing: 0.06em; }
 
       /* Sections */
       section { padding: 4rem 1.5rem; }
