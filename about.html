@@ -8,38 +8,17 @@
   <style>
 
     /* ── PALETTES ───────────────────────────────────────────── */
-    :root, [data-palette="green"] {
-      --c-dark:    #448702; --c-mid:     #5D9C1F; --c-light:   #77AB44;
-      --c-muted:   #93B86E; --c-pale:    #B2D4A3; --c-whisper: #DCF0D4;
-      --c-bg:      #F4F7F0; --c-surface: #ffffff; --c-dark-bg: #1A1F17; --c-body: #2E3829;
-    }
-    [data-palette="amber"] {
-      --c-dark:    #C97A10; --c-mid:     #E99644; --c-light:   #F5AD51;
-      --c-muted:   #F5CE6C; --c-pale:    #FFE887; --c-whisper: #FFF4CC;
-      --c-bg:      #FFFBF2; --c-surface: #ffffff; --c-dark-bg: #1C1608; --c-body: #2E2410;
-    }
-    [data-palette="slate"] {
-      --c-dark:    #2E4057; --c-mid:     #D4785A; --c-light:   #E8956D;
-      --c-muted:   #8CA5BC; --c-pale:    #C8D8E8; --c-whisper: #E8EEF4;
-      --c-bg:      #F7F4EF; --c-surface: #ffffff; --c-dark-bg: #1E2A38; --c-body: #2C3340;
-    }
-    [data-palette="teal"] {
-      --c-dark:    #7A3820; --c-mid:     #9C4A28; --c-light:   #B5633D;
-      --c-muted:   #6BBDB6; --c-pale:    #A8D5D1; --c-whisper: #D4EDEB;
-      --c-bg:      #F2F7F7; --c-surface: #ffffff; --c-dark-bg: #1A2E2D; --c-body: #1E3535;
-    }
-    [data-palette="cobalt"] {
-      --c-dark:    #1A56DB; --c-mid:     #2563EB; --c-light:   #3B82F6;
-      --c-muted:   #6EAAFF; --c-pale:    #BFDBFE; --c-whisper: #DBEAFE;
-      --c-bg:      #F0F4FF; --c-surface: #ffffff; --c-dark-bg: #0F1623; --c-body: #1E293B;
-    }
-    [data-palette="coral"] {
-      --c-dark:    #C04B2D; --c-mid:     #D4613F; --c-light:   #E0845D;
-      --c-muted:   #3A6186; --c-pale:    #B8CEDF; --c-whisper: #E8EFF5;
-      --c-bg:      #FAF8F5; --c-surface: #ffffff; --c-dark-bg: #1E2D3D; --c-body: #2C3A48;
-    }
-
     :root {
+      --c-dark:     #C97A10;
+      --c-mid:      #E99644;
+      --c-light:    #F5AD51;
+      --c-muted:    #F5CE6C;
+      --c-pale:     #FFE887;
+      --c-whisper:  #FFF4CC;
+      --c-bg:       #FFFBF2;
+      --c-surface:  #ffffff;
+      --c-dark-bg:  #1C1608;
+      --c-body:     #2E2410;
       --font-display: 'Barlow Condensed', sans-serif;
       --font-body:    'Barlow', sans-serif;
     }
@@ -52,49 +31,7 @@
       background: var(--c-bg);
       color: var(--c-body);
       overflow-x: hidden;
-      transition: background 0.4s, color 0.4s;
-    }
-
-    /* ── PALETTE SWITCHER ───────────────────────────────────── */
-    .palette-switcher {
-      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
-      background: var(--c-dark-bg); border-radius: 8px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4); min-width: 180px; overflow: hidden;
-    }
-    .palette-switcher-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.85rem 1.2rem; cursor: pointer; user-select: none;
-    }
-    .palette-switcher-header:hover { background: rgba(255,255,255,0.04); }
-    .palette-switcher-label {
-      font-family: var(--font-body); font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.45);
-    }
-    .palette-switcher-toggle {
-      background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.35);
-      font-size: 0.75rem; padding: 0; line-height: 1;
-      transition: transform 0.3s ease, color 0.2s; flex-shrink: 0;
-    }
-    .palette-switcher.minimised .palette-switcher-toggle { transform: rotate(180deg); }
-    .palette-body {
-      padding: 0 1.2rem 1rem;
-      transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
-      max-height: 500px; opacity: 1; overflow: hidden;
-    }
-    .palette-switcher.minimised .palette-body { max-height: 0; opacity: 0; padding-bottom: 0; }
-    .palette-options { display: flex; flex-direction: column; gap: 0.5rem; }
-    .palette-btn {
-      display: flex; align-items: center; gap: 0.6rem; background: transparent;
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 0.5rem 0.75rem;
-      cursor: pointer; transition: border-color 0.2s, background 0.2s; width: 100%; text-align: left;
-    }
-    .palette-btn:hover { background: rgba(255,255,255,0.08); }
-    .palette-btn.active { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
-    .palette-swatch { display: flex; gap: 2px; flex-shrink: 0; }
-    .palette-swatch span { width: 8px; height: 10px; border-radius: 2px; display: block; }
-    .palette-btn-label {
-      font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
-      color: rgba(255,255,255,0.75); letter-spacing: 0.06em; text-transform: uppercase;
+      
     }
 
     /* ── NAV ────────────────────────────────────────────────── */
@@ -113,9 +50,6 @@
       display: block; font-size: 0.65rem; font-weight: 400;
       letter-spacing: 0.18em; color: var(--c-muted); text-transform: uppercase;
     }
-    [data-palette="slate"] .nav-logo-text span,
-    [data-palette="teal"]  .nav-logo-text span,
-    [data-palette="coral"] .nav-logo-text span { color: var(--c-mid); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
     .nav-links a {
       font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
@@ -453,71 +387,10 @@
       .cta-band { flex-direction: column; text-align: center; padding: 3.5rem 1.5rem; }
       footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
       .footer-contact { text-align: center; }
-      .palette-switcher { bottom: 1rem; right: 1rem; min-width: 160px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- ── PALETTE SWITCHER ── -->
-  <div class="palette-switcher" id="paletteSwitcher">
-    <div class="palette-switcher-header" id="switcherHeader">
-      <span class="palette-switcher-label">Colour scheme</span>
-      <button class="palette-switcher-toggle" aria-label="Toggle colour panel">▲</button>
-    </div>
-    <div class="palette-body">
-      <div class="palette-options">
-        <button class="palette-btn active" data-target="green">
-          <div class="palette-swatch">
-            <span style="background:#448702"></span><span style="background:#5D9C1F"></span>
-            <span style="background:#77AB44"></span><span style="background:#93B86E"></span>
-            <span style="background:#B2D4A3"></span><span style="background:#DCF0D4"></span>
-          </div>
-          <span class="palette-btn-label">Green</span>
-        </button>
-        <button class="palette-btn" data-target="amber">
-          <div class="palette-swatch">
-            <span style="background:#C97A10"></span><span style="background:#E99644"></span>
-            <span style="background:#F5AD51"></span><span style="background:#F5CE6C"></span>
-            <span style="background:#FFE887"></span><span style="background:#FFF4CC"></span>
-          </div>
-          <span class="palette-btn-label">Amber</span>
-        </button>
-        <button class="palette-btn" data-target="slate">
-          <div class="palette-swatch">
-            <span style="background:#2E4057"></span><span style="background:#D4785A"></span>
-            <span style="background:#E8956D"></span><span style="background:#8CA5BC"></span>
-            <span style="background:#C8D8E8"></span><span style="background:#E8EEF4"></span>
-          </div>
-          <span class="palette-btn-label">Slate</span>
-        </button>
-        <button class="palette-btn" data-target="teal">
-          <div class="palette-swatch">
-            <span style="background:#1A2E2D"></span><span style="background:#9C4A28"></span>
-            <span style="background:#B5633D"></span><span style="background:#6BBDB6"></span>
-            <span style="background:#A8D5D1"></span><span style="background:#D4EDEB"></span>
-          </div>
-          <span class="palette-btn-label">Teal</span>
-        </button>
-        <button class="palette-btn" data-target="cobalt">
-          <div class="palette-swatch">
-            <span style="background:#0F1623"></span><span style="background:#1A56DB"></span>
-            <span style="background:#3B82F6"></span><span style="background:#6EAAFF"></span>
-            <span style="background:#BFDBFE"></span><span style="background:#DBEAFE"></span>
-          </div>
-          <span class="palette-btn-label">Cobalt ★</span>
-        </button>
-        <button class="palette-btn" data-target="coral">
-          <div class="palette-swatch">
-            <span style="background:#1E2D3D"></span><span style="background:#C04B2D"></span>
-            <span style="background:#D4613F"></span><span style="background:#3A6186"></span>
-            <span style="background:#B8CEDF"></span><span style="background:#E8EFF5"></span>
-          </div>
-          <span class="palette-btn-label">Coral</span>
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- ── NAV ── -->
   <nav>
@@ -714,32 +587,6 @@
       mobileNav.classList.remove('open');
       document.body.style.overflow = '';
     }));
-
-    // ── Palette switcher ──────────────────────────────────────
-    const btns = document.querySelectorAll('.palette-btn');
-    const savedPalette = new URLSearchParams(window.location.search).get('palette') || localStorage.getItem('fe-palette') || 'green';
-    function setPalette(name) {
-      document.documentElement.setAttribute('data-palette', name);
-      btns.forEach(b => b.classList.toggle('active', b.dataset.target === name));
-      localStorage.setItem('fe-palette', name);
-      try {
-        const url = new URL(window.location);
-        url.searchParams.set('palette', name);
-        window.history.replaceState({}, '', url);
-      } catch(e) {}
-    }
-    setPalette(savedPalette);
-    btns.forEach(btn => btn.addEventListener('click', () => setPalette(btn.dataset.target)));
-
-    // ── Minimise toggle ───────────────────────────────────────
-    const switcher = document.getElementById('paletteSwitcher');
-    const header   = document.getElementById('switcherHeader');
-    const isMin    = localStorage.getItem('fe-switcher-min') === 'true';
-    if (isMin) switcher.classList.add('minimised');
-    header.addEventListener('click', () => {
-      switcher.classList.toggle('minimised');
-      localStorage.setItem('fe-switcher-min', switcher.classList.contains('minimised'));
-    });
 
     // ── Scroll reveal ─────────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');

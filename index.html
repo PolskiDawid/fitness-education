@@ -7,36 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
 
-    /* ── PALETTE DEFINITIONS ────────────────────────────────────
-       Variables:
-       --c-dark     darkest accent (hover states, promise band)
-       --c-mid      primary accent (buttons, tags, dots, CTA bg)
-       --c-light    light accent (eyebrows, h1 em, stat spans)
-       --c-muted    mid-tone accent (nav sub-text, footer brand)
-       --c-pale     palest accent (how-card numbers, blockquote span)
-       --c-whisper  near-white tint (subtle bg accents, borders)
-       --c-bg       page background
-       --c-surface  card/white background
-       --c-dark-bg  dark sections (hero, audience, programme, footer)
-       --c-body     body text
-    ────────────────────────────────────────────────────────── */
-
-    /* Palette 1 Green */
-    :root, [data-palette="green"] {
-      --c-dark:     #448702;
-      --c-mid:      #5D9C1F;
-      --c-light:    #77AB44;
-      --c-muted:    #93B86E;
-      --c-pale:     #B2D4A3;
-      --c-whisper:  #DCF0D4;
-      --c-bg:       #F4F7F0;
-      --c-surface:  #ffffff;
-      --c-dark-bg:  #1A1F17;
-      --c-body:     #2E3829;
-    }
-
-    /* Palette 2 Amber/Gold */
-    [data-palette="amber"] {
+    :root {
       --c-dark:     #C97A10;
       --c-mid:      #E99644;
       --c-light:    #F5AD51;
@@ -47,66 +18,6 @@
       --c-surface:  #ffffff;
       --c-dark-bg:  #1C1608;
       --c-body:     #2E2410;
-    }
-
-    /* Palette 3 Slate/Terracotta */
-    [data-palette="slate"] {
-      --c-dark:     #2E4057;
-      --c-mid:      #D4785A;
-      --c-light:    #E8956D;
-      --c-muted:    #8CA5BC;
-      --c-pale:     #C8D8E8;
-      --c-whisper:  #E8EEF4;
-      --c-bg:       #F7F4EF;
-      --c-surface:  #ffffff;
-      --c-dark-bg:  #1E2A38;
-      --c-body:     #2C3340;
-    }
-
-    /* Palette 4 Teal/Terracotta */
-    [data-palette="teal"] {
-      --c-dark:     #7A3820;
-      --c-mid:      #9C4A28;
-      --c-light:    #B5633D;
-      --c-muted:    #6BBDB6;
-      --c-pale:     #A8D5D1;
-      --c-whisper:  #D4EDEB;
-      --c-bg:       #F2F7F7;
-      --c-surface:  #ffffff;
-      --c-dark-bg:  #1A2E2D;
-      --c-body:     #1E3535;
-    }
-
-    /* Palette 5 Cobalt/Charcoal */
-    [data-palette="cobalt"] {
-      --c-dark:     #1A56DB;
-      --c-mid:      #2563EB;
-      --c-light:    #3B82F6;
-      --c-muted:    #6EAAFF;
-      --c-pale:     #BFDBFE;
-      --c-whisper:  #DBEAFE;
-      --c-bg:       #F0F4FF;
-      --c-surface:  #ffffff;
-      --c-dark-bg:  #0F1623;
-      --c-body:     #1E293B;
-    }
-
-    /* Palette 6 Coral/Navy */
-    [data-palette="coral"] {
-      --c-dark:     #C04B2D;
-      --c-mid:      #D4613F;
-      --c-light:    #E0845D;
-      --c-muted:    #3A6186;
-      --c-pale:     #B8CEDF;
-      --c-whisper:  #E8EFF5;
-      --c-bg:       #FAF8F5;
-      --c-surface:  #ffffff;
-      --c-dark-bg:  #1E2D3D;
-      --c-body:     #2C3A48;
-    }
-
-    /* ── TOKENS (map vars to semantic names) ────────────────── */
-    :root {
       --font-display: 'Barlow Condensed', sans-serif;
       --font-body:    'Barlow', sans-serif;
     }
@@ -119,108 +30,7 @@
       background: var(--c-bg);
       color: var(--c-body);
       overflow-x: hidden;
-      transition: background 0.4s ease, color 0.4s ease;
-    }
-
-    /* ── PALETTE SWITCHER UI ────────────────────────────────── */
-    .palette-switcher {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 999;
-      background: var(--c-dark-bg);
-      border-radius: 8px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-      min-width: 180px;
-      overflow: hidden;
-    }
-    .palette-switcher-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.85rem 1.2rem;
-      cursor: pointer;
-      user-select: none;
-    }
-    .palette-switcher-header:hover { background: rgba(255,255,255,0.04); }
-    .palette-switcher-label {
-      font-family: var(--font-body);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-      display: block;
-      margin: 0;
-    }
-    .palette-switcher-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: rgba(255,255,255,0.35);
-      font-size: 0.75rem;
-      padding: 0;
-      line-height: 1;
-      transition: transform 0.3s ease, color 0.2s;
-      flex-shrink: 0;
-    }
-    .palette-switcher-toggle:hover { color: rgba(255,255,255,0.7); }
-    .palette-switcher.minimised .palette-switcher-toggle {
-      transform: rotate(180deg);
-    }
-    .palette-body {
-      padding: 0 1.2rem 1rem;
-      transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
-      max-height: 400px;
-      opacity: 1;
-      overflow: hidden;
-    }
-    .palette-switcher.minimised .palette-body {
-      max-height: 0;
-      opacity: 0;
-      padding-bottom: 0;
-    }
-    .palette-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .palette-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 4px;
-      padding: 0.5rem 0.75rem;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      width: 100%;
-      text-align: left;
-    }
-    .palette-btn:hover { background: rgba(255,255,255,0.08); }
-    .palette-btn.active {
-      border-color: rgba(255,255,255,0.4);
-      background: rgba(255,255,255,0.08);
-    }
-    .palette-swatch {
-      display: flex;
-      gap: 2px;
-      flex-shrink: 0;
-    }
-    .palette-swatch span {
-      width: 8px;
-      height: 10px;
-      border-radius: 2px;
-      display: block;
-    }
-    .palette-btn-label {
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.75);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      
     }
 
     /* ── NAV ────────────────────────────────────────────────── */
@@ -260,11 +70,6 @@
       letter-spacing: 0.18em;
       color: var(--c-muted);
       text-transform: uppercase;
-    }
-    [data-palette="slate"] .nav-logo-text span,
-    [data-palette="teal"]  .nav-logo-text span,
-    [data-palette="coral"] .nav-logo-text span {
-      color: var(--c-mid);
     }
 
     /* Desktop nav links */
@@ -511,6 +316,68 @@
       text-transform: uppercase;
       margin-bottom: 1.2rem;
     }
+
+    /* ── MEET THE COACH ──────────────────────────────────────── */
+    .meet {
+      background: var(--c-surface);
+      padding: 6rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      transition: background 0.4s;
+    }
+    .meet-photo {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      background: var(--c-dark-bg);
+    }
+    .meet-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .meet-photo::before {
+      content: '';
+      position: absolute;
+      bottom: -1rem; left: -1rem;
+      width: 55%; height: 40%;
+      background: var(--c-mid);
+      border-radius: 4px;
+      z-index: -1;
+      transition: background 0.4s;
+    }
+    .meet-photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem; padding: 2rem; text-align: center;
+    }
+    .meet-photo-placeholder p {
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+    }
+    .meet-text {}
+    .meet-body {
+      font-size: 1.05rem; line-height: 1.85;
+      color: var(--c-body); margin-bottom: 1.4rem; font-weight: 400;
+    }
+    .meet-links {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem;
+    }
+    .meet-link-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; padding: 0.8rem 1.4rem;
+      border-radius: 2px; text-decoration: none; transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .meet-link-btn.primary {
+      background: var(--c-mid); color: #fff;
+    }
+    .meet-link-btn.primary:hover { background: var(--c-dark); transform: translateY(-2px); }
+    .meet-link-btn.outline {
+      background: transparent; color: var(--c-mid);
+      border: 2px solid var(--c-mid);
+    }
+    .meet-link-btn.outline:hover { background: var(--c-mid); color: #fff; }
 
     /* ── WHO IS THIS FOR ─────────────────────────────────────── */
     .audience { background: var(--c-dark-bg); padding-top: 5rem; padding-bottom: 5rem; transition: background 0.4s; }
@@ -838,7 +705,11 @@
       .hero-stat-label { font-size: 0.7rem; letter-spacing: 0.06em; }
 
       /* Sections */
-      section { padding: 4rem 1.5rem; }
+      .meet { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+      .meet-photo { aspect-ratio: 1 / 1; }
+      .meet-photo::before { display: none; }
+      .meet-links { flex-direction: column; }
+      .meet-link-btn { justify-content: center; text-align: center; }
       .audience-grid { grid-template-columns: 1fr; }
       .audience-card { height: 320px; }
       .how-grid { grid-template-columns: 1fr; gap: 1rem; }
@@ -849,7 +720,6 @@
       .timeline-item { grid-template-columns: 80px 1fr; }
       .timeline-item::before { left: 71px; }
       .timeline-week-label strong { font-size: 1.4rem; }
-      .palette-switcher { bottom: 1rem; right: 1rem; min-width: 160px; }
     }
     @media (max-width: 480px) {
       .hero-stat-number { font-size: clamp(1.4rem, 7vw, 2rem); }
@@ -858,84 +728,6 @@
   </style>
 </head>
 <body>
-
-  <!-- ── PALETTE SWITCHER ── -->
-  <div class="palette-switcher" id="paletteSwitcher">
-    <div class="palette-switcher-header" id="switcherHeader">
-      <span class="palette-switcher-label">Colour scheme</span>
-      <button class="palette-switcher-toggle" aria-label="Toggle colour panel">▲</button>
-    </div>
-    <div class="palette-body">
-      <div class="palette-options">
-      <button class="palette-btn active" data-target="green">
-        <div class="palette-swatch">
-          <span style="background:#448702"></span>
-          <span style="background:#5D9C1F"></span>
-          <span style="background:#77AB44"></span>
-          <span style="background:#93B86E"></span>
-          <span style="background:#B2D4A3"></span>
-          <span style="background:#DCF0D4"></span>
-        </div>
-        <span class="palette-btn-label">Green</span>
-      </button>
-      <button class="palette-btn" data-target="amber">
-        <div class="palette-swatch">
-          <span style="background:#C97A10"></span>
-          <span style="background:#E99644"></span>
-          <span style="background:#F5AD51"></span>
-          <span style="background:#F5CE6C"></span>
-          <span style="background:#FFE887"></span>
-          <span style="background:#FFF4CC"></span>
-        </div>
-        <span class="palette-btn-label">Amber</span>
-      </button>
-      <button class="palette-btn" data-target="slate">
-        <div class="palette-swatch">
-          <span style="background:#2E4057"></span>
-          <span style="background:#D4785A"></span>
-          <span style="background:#E8956D"></span>
-          <span style="background:#8CA5BC"></span>
-          <span style="background:#C8D8E8"></span>
-          <span style="background:#E8EEF4"></span>
-        </div>
-        <span class="palette-btn-label">Slate</span>
-      </button>
-      <button class="palette-btn" data-target="teal">
-        <div class="palette-swatch">
-          <span style="background:#1A2E2D"></span>
-          <span style="background:#9C4A28"></span>
-          <span style="background:#B5633D"></span>
-          <span style="background:#6BBDB6"></span>
-          <span style="background:#A8D5D1"></span>
-          <span style="background:#D4EDEB"></span>
-        </div>
-        <span class="palette-btn-label">Teal</span>
-      </button>
-      <button class="palette-btn" data-target="cobalt">
-        <div class="palette-swatch">
-          <span style="background:#0F1623"></span>
-          <span style="background:#1A56DB"></span>
-          <span style="background:#3B82F6"></span>
-          <span style="background:#6EAAFF"></span>
-          <span style="background:#BFDBFE"></span>
-          <span style="background:#DBEAFE"></span>
-        </div>
-        <span class="palette-btn-label">Cobalt ★</span>
-      </button>
-      <button class="palette-btn" data-target="coral">
-        <div class="palette-swatch">
-          <span style="background:#1E2D3D"></span>
-          <span style="background:#C04B2D"></span>
-          <span style="background:#D4613F"></span>
-          <span style="background:#3A6186"></span>
-          <span style="background:#B8CEDF"></span>
-          <span style="background:#E8EFF5"></span>
-        </div>
-        <span class="palette-btn-label">Coral</span>
-      </button>
-    </div>
-  </div>
-  </div>
 
   <!-- ── NAV ── -->
   <nav>
@@ -994,10 +786,6 @@
           <div class="hero-stat-label">Dedicated coaching</div>
         </div>
         <div class="hero-stat reveal reveal-delay-3">
-          <div class="hero-stat-number">2<span>:1</span></div>
-          <div class="hero-stat-label">Partner training available</div>
-        </div>
-        <div class="hero-stat reveal reveal-delay-4">
           <div class="hero-stat-number" style="font-size:2rem;line-height:1.1">FOR<br><span>LIFE</span></div>
           <div class="hero-stat-label">Knowledge you keep</div>
         </div>
@@ -1008,6 +796,37 @@
   <!-- ── PROMISE BAND ── -->
   <div class="promise-band">
     <blockquote>"I'll be the <span>last coach</span> you'll ever have to hire."</blockquote>
+  </div>
+
+  <!-- ── MEET THE COACH ── -->
+  <div class="meet">
+    <div class="meet-photo reveal">
+      <!-- Replace with Ross's photo: <img src="ross.jpg" alt="Ross"> -->
+      <div class="meet-photo-placeholder">
+        <p>Photo of Ross</p>
+      </div>
+    </div>
+    <div class="meet-text reveal reveal-delay-1">
+      <div class="section-eyebrow">Meet the coach</div>
+      <h2 class="section-heading">I'm Ross.</h2>
+      <p class="meet-body">I'm a personal trainer based in Bristol, and the thinking behind everything I do comes down to one thing: most coaches keep you dependent on them. I want to do the opposite.</p>
+      <p class="meet-body">My coaching programme, Become Your Own Coach, is built to give you the knowledge, habits, and confidence to train for life on your own terms. Every session comes with the reasoning behind it. By the time we're done, you'll understand your body well enough to never need to hire a coach again.</p>
+      <p class="meet-body">Calm, patient, and no-nonsense. That's how I work.</p>
+      <div class="meet-links">
+        <a href="services.html#byoc" class="meet-link-btn primary">
+          The BYOC Programme
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="services.html" class="meet-link-btn outline">
+          All services
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="about.html" class="meet-link-btn outline">
+          More about me
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- ── WHO IS THIS FOR ── -->
@@ -1060,7 +879,7 @@
       <div class="how-card reveal reveal-delay-1">
         <span class="how-card-num">02</span>
         <h3>Your Plan</h3>
-        <p>I'll write a personalised 8-week programme built around you, your schedule, and your starting point including a preparation week before we officially begin.</p>
+        <p>I'll put together your 8-week programme. The course covers the same core content for everyone, with minor adjustments based on your starting point and the coaching option you've chosen.</p>
       </div>
       <div class="how-card reveal reveal-delay-2">
         <span class="how-card-num">03</span>
@@ -1084,8 +903,8 @@
         </div>
         <div class="timeline-card">
           <div class="tl-tag">Foundation</div>
-          <h4>Measurements &amp; Goal Setting</h4>
-          <p>We'll cover which measurements actually matter photos, tape, and bodyweight and how to take them accurately. You'll set up your tracking sheet and agree your first goals.</p>
+          <h4>Measurements</h4>
+          <p>We'll cover which measurements actually matter: photos, tape, and bodyweight. and how to take them accurately. You'll set up your tracking sheet ready to monitor progress throughout the course.</p>
         </div>
       </div>
       <div class="timeline-item reveal reveal-delay-1">
@@ -1095,7 +914,7 @@
         <div class="timeline-card">
           <div class="tl-tag">Movement</div>
           <h4>Basic Movement Patterns</h4>
-          <p>I'll teach you how the body moves. You'll learn correct form and technique for pushing, pulling, squatting, and hinging the four patterns behind every effective session.</p>
+          <p>I'll teach you how the body moves. You'll learn correct form and technique for pushing, pulling, squatting, and hinging, the four patterns behind every effective session.</p>
         </div>
       </div>
       <div class="timeline-item reveal reveal-delay-2">
@@ -1105,7 +924,7 @@
         <div class="timeline-card">
           <div class="tl-tag">Programming</div>
           <h4>Building Your First Programme</h4>
-          <p>You'll use your movement knowledge to build three sessions two resistance, one cardio. I'll introduce RPE and progressive overload so your training keeps improving week on week.</p>
+          <p>This is where proper training begins. You'll build three sessions using your movement knowledge: two resistance, one cardio. and I'll introduce RPE and progressive overload to keep things improving.</p>
         </div>
       </div>
       <div class="timeline-item reveal reveal-delay-3">
@@ -1115,7 +934,7 @@
         <div class="timeline-card">
           <div class="tl-tag">Nutrition</div>
           <h4>Calorie Targets &amp; Food Planning</h4>
-          <p>We'll calculate your calorie and macro goals together. I'll walk you through how to use a tracking app, understand deficits and surpluses, and build a food plan that fits your life.</p>
+          <p>This is when we tackle food properly. We'll calculate your calorie and macro goals, walk through how to use a tracking app, and build a food plan that fits your life.</p>
         </div>
       </div>
       <div class="timeline-item reveal reveal-delay-4">
@@ -1168,35 +987,6 @@
       mobileNav.classList.remove('open');
       document.body.style.overflow = '';
     }));
-
-    // ── Palette switcher ──────────────────────────────────────
-    const btns = document.querySelectorAll('.palette-btn');
-    const savedPalette = new URLSearchParams(window.location.search).get('palette') || localStorage.getItem('fe-palette') || 'green';
-
-    function setPalette(name) {
-      document.documentElement.setAttribute('data-palette', name);
-      btns.forEach(b => b.classList.toggle('active', b.dataset.target === name));
-      localStorage.setItem('fe-palette', name);
-      try {
-        const url = new URL(window.location);
-        url.searchParams.set('palette', name);
-        window.history.replaceState({}, '', url);
-      } catch(e) {}
-    }
-
-    setPalette(savedPalette);
-    btns.forEach(btn => btn.addEventListener('click', () => setPalette(btn.dataset.target)));
-
-    // ── Minimise toggle ───────────────────────────────────────
-    const switcher = document.getElementById('paletteSwitcher');
-    const header   = document.getElementById('switcherHeader');
-    const isMin    = localStorage.getItem('fe-switcher-min') === 'true';
-    if (isMin) switcher.classList.add('minimised');
-
-    header.addEventListener('click', () => {
-      switcher.classList.toggle('minimised');
-      localStorage.setItem('fe-switcher-min', switcher.classList.contains('minimised'));
-    });
 
     // ── Scroll reveal ─────────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');
