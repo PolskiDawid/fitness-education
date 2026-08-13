@@ -8,7 +8,7 @@
   <style>
 
     :root {
-      --c-dark:     #C97A10;
+      --c-dark:     #C98A20;
       --c-mid:      #E99644;
       --c-light:    #F5AD51;
       --c-muted:    #F5CE6C;
@@ -16,8 +16,8 @@
       --c-whisper:  #FFF4CC;
       --c-bg:       #FFFBF2;
       --c-surface:  #ffffff;
-      --c-dark-bg:  #1C1608;
-      --c-body:     #2E2410;
+      --c-dark-bg:  #181818;
+      --c-body:     #2A2A2A;
       --font-display: 'Barlow Condensed', sans-serif;
       --font-body:    'Barlow', sans-serif;
     }
@@ -133,13 +133,13 @@
 
     /* ── PROMISE BAND ───────────────────────────────────────── */
     .promise-band {
-      background: var(--c-dark); padding: 2.8rem 4rem; text-align: center;
+      background: var(--c-light); padding: 2.8rem 4rem; text-align: center;
     }
     .promise-band blockquote {
       font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2.2rem);
-      font-weight: 700; color: #fff; letter-spacing: 0.02em; text-transform: uppercase;
+      font-weight: 700; color: var(--c-dark-bg); letter-spacing: 0.02em; text-transform: uppercase;
     }
-    .promise-band blockquote span { color: var(--c-pale); }
+    .promise-band blockquote span { color: var(--c-dark-bg); }
 
     /* ── SHARED ─────────────────────────────────────────────── */
     .section-eyebrow {
@@ -331,32 +331,34 @@
     .process-card p { font-size: 1rem; line-height: 1.72; color: var(--c-body); opacity: 0.85; }
 
     /* ── DELIVERY OPTIONS ───────────────────────────────────── */
-    .delivery { background: var(--c-mid); padding: 5rem 4rem; }
-    .delivery .section-eyebrow { color: rgba(255,255,255,0.65); }
+    .delivery { background: var(--c-dark-bg); padding: 5rem 4rem; }
+    .delivery .section-eyebrow { color: var(--c-light); }
     .delivery .section-heading { color: #fff; }
     .delivery-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;
     }
     .delivery-card {
-      background: rgba(255,255,255,0.1); border-radius: 8px; padding: 2.5rem;
-      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04); border-radius: 8px; padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.2s, border-color 0.2s;
     }
+    .delivery-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.2); }
     .delivery-card-tag {
       display: inline-block; font-size: 0.65rem; font-weight: 700;
       letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--c-dark); background: #fff;
+      color: var(--c-light); background: rgba(255,255,255,0.08);
       padding: 0.3rem 0.7rem; border-radius: 2px; margin-bottom: 1.2rem;
     }
     .delivery-card h3 {
       font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
       color: #fff; text-transform: uppercase; margin-bottom: 0.75rem;
     }
-    .delivery-card p { font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1.5rem; }
+    .delivery-card p { font-size: 1rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 1.5rem; }
     .delivery-card-price {
       font-family: var(--font-display); font-size: 2.2rem; font-weight: 800;
-      color: #fff; margin-bottom: 0.2rem;
+      color: var(--c-light); margin-bottom: 0.2rem;
     }
-    .delivery-card-price-note { font-size: 0.8rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.08em; }
+    .delivery-card-price-note { font-size: 0.8rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.08em; }
 
     /* ── CTA BAND ────────────────────────────────────────────── */
     .cta-band {
