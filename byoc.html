@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Become Your Own Coach · Fitness Education with Ross</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+
+    :root {
+      --c-dark:     #C97A10;
+      --c-mid:      #E99644;
+      --c-light:    #F5AD51;
+      --c-muted:    #F5CE6C;
+      --c-pale:     #FFE887;
+      --c-whisper:  #FFF4CC;
+      --c-bg:       #FFFBF2;
+      --c-surface:  #ffffff;
+      --c-dark-bg:  #1C1608;
+      --c-body:     #2E2410;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-body);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 4rem;
+      background: rgba(0,0,0,0.88); backdrop-filter: blur(10px);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; flex-shrink: 0; }
+    .nav-logo-svg { width: 52px; height: auto; flex-shrink: 0; }
+    .nav-logo-text {
+      font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+      color: #fff; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1;
+    }
+    .nav-logo-text span {
+      display: block; font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.18em; color: var(--c-muted); text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-pale);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #fff; }
+    .nav-links .nav-cta {
+      background: var(--c-mid); color: #fff; padding: 0.55rem 1.3rem;
+      border-radius: 2px; transition: background 0.2s;
+    }
+    .nav-links .nav-cta:hover { background: var(--c-dark); }
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; background: none; border: none; cursor: pointer; padding: 0.4rem; z-index: 110;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px; background: #fff;
+      border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none; position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.97); backdrop-filter: blur(12px); z-index: 99;
+      padding: 5rem 2rem 2.5rem; flex-direction: column; gap: 0;
+      transform: translateY(-100%); transition: transform 0.35s ease;
+    }
+    .nav-mobile.open { transform: translateY(0); }
+    .nav-mobile li { list-style: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .nav-mobile a {
+      display: block; font-family: var(--font-display); font-size: 1.8rem;
+      font-weight: 700; text-transform: uppercase; color: #fff;
+      text-decoration: none; padding: 1rem 0; transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--c-light); }
+    .nav-mobile .nav-cta-mobile {
+      display: inline-block; margin-top: 1.5rem; background: var(--c-mid);
+      color: #fff; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 1rem 2rem;
+      border-radius: 2px; text-decoration: none; text-align: center;
+    }
+
+    /* ── PAGE HERO ──────────────────────────────────────────── */
+    .page-hero {
+      position: relative; padding: 9rem 4rem 5rem; overflow: hidden;
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80');
+      background-size: cover; background-position: center 30%; z-index: 0;
+    }
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.35) 100%);
+      z-index: 1;
+    }
+    .page-hero-content { position: relative; z-index: 2; max-width: 720px; }
+    .page-hero-eyebrow {
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--c-light); margin-bottom: 1rem; display: block;
+    }
+    .page-hero h1 {
+      font-family: var(--font-display); font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 800; color: #fff; text-transform: uppercase;
+      line-height: 0.95; margin-bottom: 1.5rem;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--c-light); }
+    .page-hero-desc {
+      font-size: 1.15rem; color: rgba(255,255,255,0.78); max-width: 560px;
+      line-height: 1.75; font-weight: 400; margin-bottom: 2.5rem;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--c-mid); color: #fff; font-family: var(--font-body);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 1rem 2rem; text-decoration: none;
+      border-radius: 2px; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--c-dark); transform: translateY(-2px); }
+
+    /* ── PROMISE BAND ───────────────────────────────────────── */
+    .promise-band {
+      background: var(--c-dark); padding: 2.8rem 4rem; text-align: center;
+    }
+    .promise-band blockquote {
+      font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700; color: #fff; letter-spacing: 0.02em; text-transform: uppercase;
+    }
+    .promise-band blockquote span { color: var(--c-pale); }
+
+    /* ── SHARED ─────────────────────────────────────────────── */
+    .section-eyebrow {
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--c-mid); margin-bottom: 0.9rem; display: block;
+    }
+    .section-heading {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--c-dark-bg); line-height: 1.0;
+      text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+
+    /* ── WHO IS IT FOR ──────────────────────────────────────── */
+    .audience {
+      background: var(--c-dark-bg); padding: 5rem 4rem;
+    }
+    .audience .section-heading { color: #fff; }
+    .audience .section-eyebrow { color: var(--c-light); }
+    .audience-intro {
+      font-size: 1.05rem; color: rgba(255,255,255,0.65);
+      max-width: 540px; line-height: 1.75; margin-bottom: 3rem; font-weight: 400;
+    }
+    .audience-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    }
+    .audience-card {
+      position: relative; height: 380px; border-radius: 6px; overflow: hidden;
+    }
+    .audience-card-bg {
+      position: absolute; inset: 0; background-size: cover;
+      background-position: center; transition: transform 0.6s ease;
+    }
+    .audience-card:hover .audience-card-bg { transform: scale(1.05); }
+    .audience-card-1 .audience-card-bg { background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80'); }
+    .audience-card-2 .audience-card-bg { background-image: url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80'); }
+    .audience-card-3 .audience-card-bg { background-image: url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&q=80'); }
+    .audience-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(5,8,4,1.0) 0%, rgba(5,8,4,0.75) 50%, rgba(5,8,4,0.4) 100%);
+      z-index: 1;
+    }
+    .audience-card-content {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; z-index: 2;
+    }
+    .audience-card-tag {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: #fff;
+      background: var(--c-mid); padding: 0.3rem 0.7rem; border-radius: 2px; margin-bottom: 0.75rem;
+    }
+    .audience-card h3 {
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+      color: #fff; text-transform: uppercase; margin-bottom: 0.6rem; line-height: 1.1;
+    }
+    .audience-card p { font-size: 0.95rem; line-height: 1.65; color: rgba(255,255,255,0.8); font-weight: 400; }
+
+    /* ── PROGRAMME OVERVIEW ─────────────────────────────────── */
+    .overview { background: var(--c-surface); padding: 6rem 4rem; }
+    .overview-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+    }
+    .overview-body {
+      font-size: 1.05rem; line-height: 1.85; color: var(--c-body);
+      margin-bottom: 1.4rem; font-weight: 400;
+    }
+    .delivery-options {
+      display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;
+    }
+    .delivery-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--c-whisper); color: var(--c-dark);
+      font-family: var(--font-body); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.6rem 1.1rem; border-radius: 2px;
+    }
+    /* Topic overview cards */
+    .topic-list {
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .topic-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--c-bg);
+      border-radius: 4px;
+      border-left: 3px solid var(--c-mid);
+    }
+    .topic-week {
+      font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--c-mid); min-width: 52px;
+    }
+    .topic-name {
+      font-size: 0.95rem; font-weight: 600; color: var(--c-dark-bg);
+    }
+
+    /* ── TIMELINE ────────────────────────────────────────────── */
+    .timeline-section { background: var(--c-dark-bg); padding: 6rem 4rem; }
+    .timeline-section .section-heading { color: #fff; }
+    .timeline-section .section-eyebrow { color: var(--c-light); }
+    .timeline-intro {
+      font-size: 1rem; color: rgba(255,255,255,0.55);
+      max-width: 500px; line-height: 1.7; font-weight: 400; margin-bottom: 3.5rem;
+    }
+    .timeline { position: relative; display: flex; flex-direction: column; }
+    .timeline::before {
+      content: ''; position: absolute; left: 130px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--c-dark), var(--c-light), var(--c-dark));
+      opacity: 0.4;
+    }
+    .timeline-item { display: grid; grid-template-columns: 130px 1fr; position: relative; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: 121px; top: 2.2rem;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--c-mid); border: 3px solid var(--c-dark-bg);
+      box-shadow: 0 0 0 2px var(--c-light); z-index: 1;
+    }
+    .timeline-week {
+      padding: 1.8rem 2.5rem 1.8rem 0;
+      display: flex; align-items: flex-start; justify-content: flex-end;
+    }
+    .timeline-week-label {
+      font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-light);
+      text-align: right; line-height: 1.2;
+    }
+    .timeline-week-label strong {
+      display: block; font-size: 2.1rem; font-weight: 800;
+      color: #fff; line-height: 1; letter-spacing: -0.01em; min-width: 2.5ch;
+    }
+    .timeline-card {
+      margin: 1rem 0 1rem 2.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; padding: 1.8rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .timeline-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.2); }
+    .tl-tag {
+      display: inline-block; font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--c-light);
+      background: rgba(255,255,255,0.08); padding: 0.2rem 0.55rem;
+      border-radius: 2px; margin-bottom: 0.75rem;
+    }
+    .timeline-card h4 {
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+      text-transform: uppercase; color: #fff; margin-bottom: 0.6rem; letter-spacing: 0.03em;
+    }
+    .timeline-card p {
+      font-size: 1rem; line-height: 1.72; color: rgba(255,255,255,0.65); font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .timeline-card p:last-child { margin-bottom: 0; }
+    /* What you need list */
+    .needs-list {
+      list-style: none; display: flex; flex-direction: column; gap: 0.4rem;
+      margin-top: 1rem; padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .needs-list li {
+      font-size: 0.85rem; color: rgba(255,255,255,0.45);
+      display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.5;
+    }
+    .needs-list li::before {
+      content: ''; display: block; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--c-muted); flex-shrink: 0; margin-top: 0.45rem;
+    }
+    .needs-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      margin-top: 1rem; margin-bottom: 0.4rem; display: block;
+    }
+
+    /* ── HOW IT WORKS ────────────────────────────────────────── */
+    .process { background: var(--c-bg); padding: 6rem 4rem; }
+    .process-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem;
+    }
+    .process-card {
+      background: var(--c-surface); border-radius: 6px; padding: 2.5rem 2rem;
+    }
+    .process-num {
+      font-family: var(--font-display); font-size: 5rem; font-weight: 800;
+      color: var(--c-pale); line-height: 1; margin-bottom: 1.2rem; display: block;
+    }
+    .process-card h3 {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+      text-transform: uppercase; color: var(--c-dark-bg); margin-bottom: 0.75rem;
+    }
+    .process-card p { font-size: 1rem; line-height: 1.72; color: var(--c-body); opacity: 0.85; }
+
+    /* ── DELIVERY OPTIONS ───────────────────────────────────── */
+    .delivery { background: var(--c-mid); padding: 5rem 4rem; }
+    .delivery .section-eyebrow { color: rgba(255,255,255,0.65); }
+    .delivery .section-heading { color: #fff; }
+    .delivery-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;
+    }
+    .delivery-card {
+      background: rgba(255,255,255,0.1); border-radius: 8px; padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .delivery-card-tag {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--c-dark); background: #fff;
+      padding: 0.3rem 0.7rem; border-radius: 2px; margin-bottom: 1.2rem;
+    }
+    .delivery-card h3 {
+      font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
+      color: #fff; text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .delivery-card p { font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1.5rem; }
+    .delivery-card-price {
+      font-family: var(--font-display); font-size: 2.2rem; font-weight: 800;
+      color: #fff; margin-bottom: 0.2rem;
+    }
+    .delivery-card-price-note { font-size: 0.8rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── CTA BAND ────────────────────────────────────────────── */
+    .cta-band {
+      background: var(--c-dark-bg); padding: 5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.0; max-width: 500px;
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: #fff; font-family: var(--font-body);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 1rem 2rem; text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.6); border-radius: 2px; white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--c-dark-bg); padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 2rem; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand {
+      font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+      color: var(--c-muted); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none;
+      letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--c-pale); }
+    .footer-contact { font-size: 0.82rem; color: rgba(255,255,255,0.35); text-align: right; line-height: 1.9; }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { display: flex; }
+      .page-hero { padding: 7rem 1.5rem 3.5rem; }
+      .audience { padding: 4rem 1.5rem; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .audience-card { height: 300px; }
+      .overview { padding: 4rem 1.5rem; }
+      .overview-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .timeline-section { padding: 4rem 1.5rem; }
+      .timeline::before { left: 80px; }
+      .timeline-item { grid-template-columns: 80px 1fr; }
+      .timeline-item::before { left: 71px; }
+      .timeline-week-label strong { font-size: 1.4rem; }
+      .process { padding: 4rem 1.5rem; }
+      .process-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .delivery { padding: 4rem 1.5rem; }
+      .delivery-grid { grid-template-columns: 1fr; }
+      .cta-band { flex-direction: column; text-align: center; padding: 3.5rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+      .footer-contact { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-brand">
+      <svg class="nav-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56.48 28.8">
+        <path fill="#ffffff" d="M24.39,18.06l-15.27.02-4.6,10.65c-1.61.09-2.98.11-4.51-.01L8.25,9.93c1.74-3.95,5.63-7.05,9.92-7.14l10.88-.22c.72-.01,1.36-.33,2.2-.63l-2.55,5.9h-10.26c-3.35.01-6.3,2.02-7.02,5.46l12.75-.02c.85,0,1.6-.26,2.52-.54l-2.3,5.33ZM56.48.06l-23.11-.06-2.53,5.96c.54-.19,1.18-.64,1.69-.64l19.27-.15c2.74-.02,4.77-2.64,4.68-5.12ZM47.01,10.76l-18.15.02-2.42,5.57c1.38-.53,2.21-.54,3.38-.54l11.31.03c3.16,0,5.78-1.75,5.89-5.09ZM34.95,21.26l-10.61-.02-2.44,5.87c1.46-.47,2.59-.58,4.21-.5,3.87.18,7.54-1.76,8.85-5.36Z"/>
+      </svg>
+      <div class="nav-logo-text">Fitness Education<span>with Ross</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="byoc.html" class="active">BYOC</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Get in touch</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <ul class="nav-mobile" id="mobileNav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="byoc.html">BYOC</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="nav-cta-mobile">Get in touch</a></li>
+  </ul>
+
+  <!-- ── HERO ── -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <span class="page-hero-eyebrow">8-week programme</span>
+      <h1>Become your <em>own</em> coach.</h1>
+      <p class="page-hero-desc">An 8-week programme delivered either in person or online, built to instil a basic foundation of knowledge for first timers in the gym.</p>
+      <a href="contact.html" class="btn-primary">Start the programme <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+
+  <!-- ── PROMISE BAND ── -->
+  <div class="promise-band">
+    <blockquote>"I'll be the <span>last coach</span> you'll ever have to hire."</blockquote>
+  </div>
+
+  <!-- ── WHO IS IT FOR ── -->
+  <section class="audience">
+    <div class="section-eyebrow">Who is this for?</div>
+    <h2 class="section-heading">First timers.<br>And those stuck.</h2>
+    <p class="audience-intro">The foundational knowledge I deliver applies to everyone, regardless of age, gender, or ability.</p>
+    <div class="audience-grid">
+      <div class="audience-card audience-card-1 reveal">
+        <div class="audience-card-bg"></div>
+        <div class="audience-card-content">
+          <div class="audience-card-tag">Beginners</div>
+          <h3>New to the gym</h3>
+          <p>Taking your first steps and don't know where to start. I'll give you the foundations from day one.</p>
+        </div>
+      </div>
+      <div class="audience-card audience-card-2 reveal reveal-delay-1">
+        <div class="audience-card-bg"></div>
+        <div class="audience-card-content">
+          <div class="audience-card-tag">Class-goers</div>
+          <h3>Stuck in classes</h3>
+          <p>Getting bored or not seeing results, and wanting to take more control of your own training.</p>
+        </div>
+      </div>
+      <div class="audience-card audience-card-3 reveal reveal-delay-2">
+        <div class="audience-card-bg"></div>
+        <div class="audience-card-content">
+          <div class="audience-card-tag">Self-starters</div>
+          <h3>Drowning in advice?</h3>
+          <p>Giving it a go but relying on social media snippets without knowing how to turn that into an actual plan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRAMME OVERVIEW ── -->
+  <section class="overview">
+    <div class="overview-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">The programme</div>
+        <h2 class="section-heading">What the course covers.</h2>
+        <p class="overview-body">Every week has a focus, a short piece of reading, and a small task to build understanding. By the end, you'll have the knowledge and confidence to be self-sufficient.</p>
+        <p class="overview-body">The same core content is delivered to every client. There will be minor differences from person to person, but the foundation is the same for everyone.</p>
+        <div class="delivery-options">
+          <span class="delivery-pill">In person</span>
+          <span class="delivery-pill">Online</span>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="topic-list">
+          <div class="topic-item">
+            <span class="topic-week">Week 1</span>
+            <span class="topic-name">Measurements</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-week">Weeks 2–3</span>
+            <span class="topic-name">Basic movement patterns</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-week">Weeks 4–5</span>
+            <span class="topic-name">Creating workouts</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-week">Weeks 6–7</span>
+            <span class="topic-name">Setting dietary targets</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-week">Week 8</span>
+            <span class="topic-name">Check-in and review</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIMELINE ── -->
+  <section class="timeline-section">
+    <div class="section-eyebrow">Week by week</div>
+    <h2 class="section-heading">What to expect.</h2>
+    <p class="timeline-intro">Each week is broken down below. Everything provided by me is included. You'll know exactly what to bring and what to expect before each session.</p>
+
+    <div class="timeline">
+
+      <!-- Week 1 -->
+      <div class="timeline-item reveal">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>1</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Foundation</div>
+          <h4>Measurements</h4>
+          <p>Which measurements are most effective and which ones to avoid. How to accurately take those measurements, and what to look out for when comparing.</p>
+          <p>You'll get a run through on each of the different forms of measurement: how to set up the camera for photos, which areas of the body to measure with a tape, and which trendy measurements are irrelevant and why. Measurements are then inputted into a tracking sheet.</p>
+          <span class="needs-label">You will need</span>
+          <ul class="needs-list">
+            <li>Tape measure</li>
+            <li>Weighing scales</li>
+            <li>Good quality camera or camera phone</li>
+            <li>Gym membership</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Weeks 2-3 -->
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>2–3</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Movement</div>
+          <h4>Basic Movement Patterns</h4>
+          <p>Understand how the body moves and what patterns we use during training. Learn how to correctly set up posture and understand the outcome we're trying to achieve with each movement pattern.</p>
+          <p>Week 2 covers how to pull and push with the upper body, applied to basic movements in the gym. Week 3 follows the same framework for the lower body, covering the squat and hip hinge patterns.</p>
+          <ul class="needs-list">
+            <li>How to pull: form, technique, outcomes</li>
+            <li>How to push: form, technique, outcomes</li>
+            <li>How to squat: form, technique, outcomes</li>
+            <li>How to hip hinge: form, technique, outcomes</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Weeks 4-5 -->
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>4–5</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Programming</div>
+          <h4>Creating Workouts</h4>
+          <p>Begin to use knowledge of basic movement patterns to create sessions that help towards your goal. Understand the process behind building and strengthening muscle, and training the heart to become healthier and more efficient.</p>
+          <p>In week 4 you'll build your very first training programme: 2 full body resistance sessions and a cardio session. In week 5 you'll refine those sessions and learn how to use RPE to create progressive overload.</p>
+        </div>
+      </div>
+
+      <!-- Weeks 6-7 -->
+      <div class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>6–7</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Nutrition</div>
+          <h4>Setting Dietary Targets</h4>
+          <p>Gain the knowledge of what a calorie deficit, surplus, and maintenance mean, and how to use them alongside training. Learn how to figure out your calorie targets and how to count and track calories and macros.</p>
+          <p>In week 6 you'll calculate your calorie and macro goals and get a walkthrough of a calorie counting app. In week 7 you'll use that to build a food plan that hits your targets.</p>
+          <span class="needs-label">You will need</span>
+          <ul class="needs-list">
+            <li>Cronometer account (free)</li>
+            <li>Food packaging to practise with</li>
+            <li>Food scales</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Week 8 -->
+      <div class="timeline-item reveal reveal-delay-4">
+        <div class="timeline-week">
+          <div class="timeline-week-label">WEEK<strong>8</strong></div>
+        </div>
+        <div class="timeline-card">
+          <div class="tl-tag">Review</div>
+          <h4>Check-in and Next Steps</h4>
+          <p>Individual check-in to see your progress and an opportunity to ask any further questions and request more help with subjects you struggled with.</p>
+          <p>We'll review your food plan and final measurements, discuss what went well and what could have gone better, and I'll give recommendations on how you can progress your programme going forward.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="process">
+    <div class="section-eyebrow">Getting started</div>
+    <h2 class="section-heading">How it works.</h2>
+    <div class="process-grid">
+      <div class="process-card reveal">
+        <span class="process-num">01</span>
+        <h3>Consultation</h3>
+        <p>An initial conversation, in person or via phone or video call, to understand where you're starting from. No commitment, no pressure.</p>
+      </div>
+      <div class="process-card reveal reveal-delay-1">
+        <span class="process-num">02</span>
+        <h3>Preparation Week</h3>
+        <p>Before the official start date, we go through an onboarding week. A chance to take your first measurements, get set up, and purchase anything you'll need. For online clients this is especially important to understand what equipment is available before we begin.</p>
+      </div>
+      <div class="process-card reveal reveal-delay-2">
+        <span class="process-num">03</span>
+        <h3>Start Training</h3>
+        <p>A start date is agreed and the programme begins. Each week builds on the last, and by week eight you'll have the knowledge and confidence to train for life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DELIVERY OPTIONS ── -->
+  <section class="delivery">
+    <div class="section-eyebrow">How it's delivered</div>
+    <h2 class="section-heading">In person or online.</h2>
+    <div class="delivery-grid">
+      <div class="delivery-card reveal">
+        <div class="delivery-card-tag">In person</div>
+        <h3>1:1 Personal Training</h3>
+        <p>In-person coaching at Luxe Bristol, City Centre and Bedminster. I'll be there every session guiding your form, adjusting your programme, and making sure you understand what you're doing and why.</p>
+        <div class="delivery-card-price">From £199<span style="font-size:1.2rem;opacity:0.7">/mo</span></div>
+        <div class="delivery-card-price-note">1, 2, or 3 sessions per week</div>
+      </div>
+      <div class="delivery-card reveal reveal-delay-1">
+        <div class="delivery-card-tag">Remote</div>
+        <h3>Online Coaching</h3>
+        <p>Everything you'd get from in-person coaching, delivered remotely. Ideal if you already have a gym membership and want expert structure and accountability. Includes a 1-hour weekly phone or video call for queries and check-ins.</p>
+        <div class="delivery-card-price">£199<span style="font-size:1.2rem;opacity:0.7">/mo</span></div>
+        <div class="delivery-card-price-note">Monthly rolling</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <div class="cta-band">
+    <h2>Ready to start your journey?</h2>
+    <a href="contact.html" class="btn-ghost">Get in touch <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:2px"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-brand">Fitness Education · Ross</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="byoc.html">BYOC</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="footer-contact">
+      07915 307315 &nbsp;·&nbsp; @fitnesseducation_ross<br>
+      Luxe Gyms Bristol · City Centre &amp; Bedminster
+    </div>
+  </footer>
+
+  <script>
+    // ── Hamburger ─────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }));
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
