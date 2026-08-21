@@ -214,25 +214,41 @@
       letter-spacing: 0.08em; text-transform: uppercase;
       padding: 0.6rem 1.1rem; border-radius: 2px;
     }
-    /* Topic overview cards */
+    /* Topic overview cards — expandable */
     .topic-list {
       display: flex; flex-direction: column; gap: 0.75rem;
     }
     .topic-item {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 1rem 1.2rem;
       background: var(--c-bg);
       border-radius: 4px;
-      border-left: 3px solid var(--c-mid);
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+    .topic-item:hover { background: var(--c-whisper); }
+    .topic-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem; cursor: pointer; user-select: none;
     }
     .topic-week {
       font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--c-mid); min-width: 52px;
+      color: var(--c-mid); min-width: 68px;
     }
     .topic-name {
-      font-size: 0.95rem; font-weight: 600; color: var(--c-dark-bg);
+      font-size: 0.95rem; font-weight: 600; color: var(--c-dark-bg); flex: 1;
     }
+    .topic-chevron {
+      font-size: 1.2rem; color: var(--c-mid); transition: transform 0.3s ease;
+      line-height: 1; flex-shrink: 0;
+    }
+    .topic-item.open .topic-chevron { transform: rotate(90deg); }
+    .topic-body {
+      font-size: 0.92rem; line-height: 1.7; color: var(--c-body);
+      padding: 0 1.2rem; max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      opacity: 0.8;
+    }
+    .topic-item.open .topic-body { max-height: 200px; padding: 0 1.2rem 1rem; }
 
     /* ── TIMELINE ────────────────────────────────────────────── */
     .timeline-section { background: var(--c-dark-bg); padding: 6rem 4rem; }
@@ -468,7 +484,7 @@
     <div class="page-hero-content">
       <span class="page-hero-eyebrow">8-week programme</span>
       <h1>Become your <em>own</em> coach.</h1>
-      <p class="page-hero-desc">An 8-week programme delivered either in person or online, built to instil a basic foundation of knowledge for first timers in the gym.</p>
+      <p class="page-hero-desc">This 8-week programme is designed to give you the knowledge and the basic fundamental skills to be self-sufficient with your own training and diet.</p>
       <a href="contact.html" class="btn-primary">Start the programme <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
@@ -478,38 +494,6 @@
     <blockquote>"I'll be the <span>last coach</span> you'll ever have to hire."</blockquote>
   </div>
 
-  <!-- ── WHO IS IT FOR ── -->
-  <section class="audience">
-    <div class="section-eyebrow">Who is this for?</div>
-    <h2 class="section-heading">First timers.<br>And those stuck.</h2>
-    <p class="audience-intro">The foundational knowledge I deliver applies to everyone, regardless of age, gender, or ability.</p>
-    <div class="audience-grid">
-      <div class="audience-card audience-card-1 reveal">
-        <div class="audience-card-bg"></div>
-        <div class="audience-card-content">
-          <div class="audience-card-tag">Beginners</div>
-          <h3>New to the gym</h3>
-          <p>Taking your first steps and don't know where to start. I'll give you the foundations from day one.</p>
-        </div>
-      </div>
-      <div class="audience-card audience-card-2 reveal reveal-delay-1">
-        <div class="audience-card-bg"></div>
-        <div class="audience-card-content">
-          <div class="audience-card-tag">Class-goers</div>
-          <h3>Stuck in classes</h3>
-          <p>Getting bored or not seeing results, and wanting to take more control of your own training.</p>
-        </div>
-      </div>
-      <div class="audience-card audience-card-3 reveal reveal-delay-2">
-        <div class="audience-card-bg"></div>
-        <div class="audience-card-content">
-          <div class="audience-card-tag">Self-starters</div>
-          <h3>Drowning in advice?</h3>
-          <p>Giving it a go but relying on social media snippets without knowing how to turn that into an actual plan.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ── PROGRAMME OVERVIEW ── -->
   <section class="overview">
@@ -517,8 +501,8 @@
       <div class="reveal">
         <div class="section-eyebrow">The programme</div>
         <h2 class="section-heading">What the course covers.</h2>
-        <p class="overview-body">Every week has a focus, a short piece of reading, and a small task to build understanding. By the end, you'll have the knowledge and confidence to be self-sufficient.</p>
-        <p class="overview-body">The same core content is delivered to every client. There will be minor differences from person to person, but the foundation is the same for everyone.</p>
+        <p class="overview-body">There are many variables that go into being self-sufficient both inside and outside the gym, and with the ever growing number of social media 'experts' giving their opinion, it's hard to know what is actually relevant.</p>
+        <p class="overview-body">That is why I have broken down the stuff you need to know into weekly sessions, with tasks and practices, to help cement understanding of the stuff that's important.</p>
         <div class="delivery-options">
           <span class="delivery-pill">In person</span>
           <span class="delivery-pill">Online</span>
@@ -526,123 +510,48 @@
       </div>
       <div class="reveal reveal-delay-1">
         <div class="topic-list">
-          <div class="topic-item">
-            <span class="topic-week">Week 1</span>
-            <span class="topic-name">Measurements</span>
+          <div class="topic-item expandable" data-week="Week 1">
+            <div class="topic-header">
+              <span class="topic-week">Week 1</span>
+              <span class="topic-name">Measurements</span>
+              <span class="topic-chevron">&#8250;</span>
+            </div>
+            <div class="topic-body">Which measurements are most effective, how to take them accurately, and what to look out for when comparing progress over time.</div>
           </div>
-          <div class="topic-item">
-            <span class="topic-week">Weeks 2–3</span>
-            <span class="topic-name">Basic movement patterns</span>
+          <div class="topic-item expandable" data-week="Weeks 2–3">
+            <div class="topic-header">
+              <span class="topic-week">Weeks 2–3</span>
+              <span class="topic-name">Basic movement patterns</span>
+              <span class="topic-chevron">&#8250;</span>
+            </div>
+            <div class="topic-body">How the body moves and what patterns we use during training. Correct posture, form, and the outcomes we're trying to achieve with each movement.</div>
           </div>
-          <div class="topic-item">
-            <span class="topic-week">Weeks 4–5</span>
-            <span class="topic-name">Creating workouts</span>
+          <div class="topic-item expandable" data-week="Weeks 4–5">
+            <div class="topic-header">
+              <span class="topic-week">Weeks 4–5</span>
+              <span class="topic-name">Creating workouts</span>
+              <span class="topic-chevron">&#8250;</span>
+            </div>
+            <div class="topic-body">Using your movement knowledge to build sessions that work towards your goal. Understanding resistance training, cardio, and how to keep progressing week on week.</div>
           </div>
-          <div class="topic-item">
-            <span class="topic-week">Weeks 6–7</span>
-            <span class="topic-name">Setting dietary targets</span>
+          <div class="topic-item expandable" data-week="Weeks 6–7">
+            <div class="topic-header">
+              <span class="topic-week">Weeks 6–7</span>
+              <span class="topic-name">Setting dietary targets</span>
+              <span class="topic-chevron">&#8250;</span>
+            </div>
+            <div class="topic-body">How to calculate your calorie targets, understand macronutrients, track your food, and build a plan that works around your life.</div>
           </div>
-          <div class="topic-item">
-            <span class="topic-week">Week 8</span>
-            <span class="topic-name">Check-in and review</span>
+          <div class="topic-item expandable" data-week="Week 8">
+            <div class="topic-header">
+              <span class="topic-week">Week 8</span>
+              <span class="topic-name">Check-in and review</span>
+              <span class="topic-chevron">&#8250;</span>
+            </div>
+            <div class="topic-body">Review your measurements and progress, get structured feedback, and leave with a clear understanding of how to keep going on your own.</div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ── TIMELINE ── -->
-  <section class="timeline-section">
-    <div class="section-eyebrow">Week by week</div>
-    <h2 class="section-heading">What to expect.</h2>
-    <p class="timeline-intro">Each week is broken down below. Everything provided by me is included. You'll know exactly what to bring and what to expect before each session.</p>
-
-    <div class="timeline">
-
-      <!-- Week 1 -->
-      <div class="timeline-item reveal">
-        <div class="timeline-week">
-          <div class="timeline-week-label">WEEK<strong>1</strong></div>
-        </div>
-        <div class="timeline-card">
-          <div class="tl-tag">Foundation</div>
-          <h4>Measurements</h4>
-          <p>Which measurements are most effective and which ones to avoid. How to accurately take those measurements, and what to look out for when comparing.</p>
-          <p>You'll get a run through on each of the different forms of measurement: how to set up the camera for photos, which areas of the body to measure with a tape, and which trendy measurements are irrelevant and why. Measurements are then inputted into a tracking sheet.</p>
-          <span class="needs-label">You will need</span>
-          <ul class="needs-list">
-            <li>Tape measure</li>
-            <li>Weighing scales</li>
-            <li>Good quality camera or camera phone</li>
-            <li>Gym membership</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Weeks 2-3 -->
-      <div class="timeline-item reveal reveal-delay-1">
-        <div class="timeline-week">
-          <div class="timeline-week-label">WEEK<strong>2–3</strong></div>
-        </div>
-        <div class="timeline-card">
-          <div class="tl-tag">Movement</div>
-          <h4>Basic Movement Patterns</h4>
-          <p>Understand how the body moves and what patterns we use during training. Learn how to correctly set up posture and understand the outcome we're trying to achieve with each movement pattern.</p>
-          <p>Week 2 covers how to pull and push with the upper body, applied to basic movements in the gym. Week 3 follows the same framework for the lower body, covering the squat and hip hinge patterns.</p>
-          <ul class="needs-list">
-            <li>How to pull: form, technique, outcomes</li>
-            <li>How to push: form, technique, outcomes</li>
-            <li>How to squat: form, technique, outcomes</li>
-            <li>How to hip hinge: form, technique, outcomes</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Weeks 4-5 -->
-      <div class="timeline-item reveal reveal-delay-2">
-        <div class="timeline-week">
-          <div class="timeline-week-label">WEEK<strong>4–5</strong></div>
-        </div>
-        <div class="timeline-card">
-          <div class="tl-tag">Programming</div>
-          <h4>Creating Workouts</h4>
-          <p>Begin to use knowledge of basic movement patterns to create sessions that help towards your goal. Understand the process behind building and strengthening muscle, and training the heart to become healthier and more efficient.</p>
-          <p>In week 4 you'll build your very first training programme: 2 full body resistance sessions and a cardio session. In week 5 you'll refine those sessions and learn how to use RPE to create progressive overload.</p>
-        </div>
-      </div>
-
-      <!-- Weeks 6-7 -->
-      <div class="timeline-item reveal reveal-delay-3">
-        <div class="timeline-week">
-          <div class="timeline-week-label">WEEK<strong>6–7</strong></div>
-        </div>
-        <div class="timeline-card">
-          <div class="tl-tag">Nutrition</div>
-          <h4>Setting Dietary Targets</h4>
-          <p>Gain the knowledge of what a calorie deficit, surplus, and maintenance mean, and how to use them alongside training. Learn how to figure out your calorie targets and how to count and track calories and macros.</p>
-          <p>In week 6 you'll calculate your calorie and macro goals and get a walkthrough of a calorie counting app. In week 7 you'll use that to build a food plan that hits your targets.</p>
-          <span class="needs-label">You will need</span>
-          <ul class="needs-list">
-            <li>Cronometer account (free)</li>
-            <li>Food packaging to practise with</li>
-            <li>Food scales</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Week 8 -->
-      <div class="timeline-item reveal reveal-delay-4">
-        <div class="timeline-week">
-          <div class="timeline-week-label">WEEK<strong>8</strong></div>
-        </div>
-        <div class="timeline-card">
-          <div class="tl-tag">Review</div>
-          <h4>Check-in and Next Steps</h4>
-          <p>Individual check-in to see your progress and an opportunity to ask any further questions and request more help with subjects you struggled with.</p>
-          <p>We'll review your food plan and final measurements, discuss what went well and what could have gone better, and I'll give recommendations on how you can progress your programme going forward.</p>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -654,16 +563,16 @@
       <div class="process-card reveal">
         <span class="process-num">01</span>
         <h3>Consultation</h3>
-        <p>An initial conversation, in person or via phone or video call, to understand where you're starting from. No commitment, no pressure.</p>
+        <p>An initial conversation, in person or via video call, to understand where you're starting from. No commitment, no pressure.</p>
       </div>
       <div class="process-card reveal reveal-delay-1">
         <span class="process-num">02</span>
-        <h3>Preparation Week</h3>
-        <p>Before the official start date, we go through an onboarding week. A chance to take your first measurements, get set up, and purchase anything you'll need. For online clients this is especially important to understand what equipment is available before we begin.</p>
+        <h3>Preparation</h3>
+        <p>Before we start, a little bit of onboarding and preparation will need to take place. This is a chance to ensure we have everything we need for the programme, and to sort out the bits we don't.</p>
       </div>
       <div class="process-card reveal reveal-delay-2">
         <span class="process-num">03</span>
-        <h3>Start Training</h3>
+        <h3>Begin</h3>
         <p>A start date is agreed and the programme begins. Each week builds on the last, and by week eight you'll have the knowledge and confidence to train for life.</p>
       </div>
     </div>
@@ -677,16 +586,12 @@
       <div class="delivery-card reveal">
         <div class="delivery-card-tag">In person</div>
         <h3>1:1 Personal Training</h3>
-        <p>In-person coaching at Luxe Bristol, City Centre and Bedminster. I'll be there every session guiding your form, adjusting your programme, and making sure you understand what you're doing and why.</p>
-        <div class="delivery-card-price">From £199<span style="font-size:1.2rem;opacity:0.7">/mo</span></div>
-        <div class="delivery-card-price-note">1, 2, or 3 sessions per week</div>
+        <p>In-person guidance through the BYOC programme at Luxe Bristol, City Centre and Bedminster. I'll be with you every step of the way with a weekly 1-hour personal session at the gym.</p>
       </div>
       <div class="delivery-card reveal reveal-delay-1">
         <div class="delivery-card-tag">Remote</div>
         <h3>Online Coaching</h3>
-        <p>Everything you'd get from in-person coaching, delivered remotely. Ideal if you already have a gym membership and want expert structure and accountability. Includes a 1-hour weekly phone or video call for queries and check-ins.</p>
-        <div class="delivery-card-price">£199<span style="font-size:1.2rem;opacity:0.7">/mo</span></div>
-        <div class="delivery-card-price-note">Monthly rolling</div>
+        <p>Online guidance through the BYOC programme for those who prefer to use their local gym. This includes a weekly 1-hour video call to deliver the contents of the programme and go over any queries and questions.</p>
       </div>
     </div>
   </section>
@@ -727,6 +632,13 @@
       mobileNav.classList.remove('open');
       document.body.style.overflow = '';
     }));
+
+    // ── Expandable topics ─────────────────────────────────────
+    document.querySelectorAll('.topic-item.expandable').forEach(item => {
+      item.querySelector('.topic-header').addEventListener('click', () => {
+        item.classList.toggle('open');
+      });
+    });
 
     // ── Scroll reveal ─────────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');
