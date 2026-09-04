@@ -48,7 +48,7 @@
     }
     .nav-logo-text span {
       display: block; font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.18em; color: var(--c-muted); text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--c-mid); text-transform: uppercase;
     }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
     .nav-links a {
@@ -131,16 +131,21 @@
 
     /* ── MAIN CONTACT SECTION ───────────────────────────────── */
     .contact-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Left: form */
+    /* Form — full width, centred */
     .contact-form-side {
       padding: 5rem 4rem;
       background: var(--c-surface);
-      transition: background 0.4s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .contact-form-inner {
+      width: 100%;
+      max-width: 640px;
     }
     .section-eyebrow {
       font-size: 0.88rem; font-weight: 600; letter-spacing: 0.2em;
@@ -233,48 +238,48 @@
       font-size: 1rem; color: var(--c-body); opacity: 0.75; line-height: 1.7;
     }
 
-    /* Right: info panel */
+    /* Info strip — full width, horizontal underneath form */
     .contact-info-side {
-      padding: 5rem 4rem;
+      padding: 3.5rem 4rem;
       background: var(--c-dark-bg);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: background 0.4s;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
     }
     .contact-info-heading {
       font-family: var(--font-display); font-size: 1rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.3); margin-bottom: 2.5rem;
+      color: rgba(255,255,255,0.3); margin-bottom: 1.5rem; display: block;
+      grid-column: 1 / -1;
     }
     .contact-detail {
-      margin-bottom: 2.5rem;
+      margin-bottom: 0;
     }
     .contact-detail-label {
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
       text-transform: uppercase; color: var(--c-light);
-      margin-bottom: 0.4rem; display: block; transition: color 0.4s;
+      margin-bottom: 0.4rem; display: block;
     }
     .contact-detail-value {
-      font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
       color: #fff; text-decoration: none; display: block; line-height: 1.2;
       transition: color 0.2s;
     }
     a.contact-detail-value:hover { color: var(--c-light); }
     .contact-detail-sub {
-      font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem;
+      font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem; margin-bottom: 1.8rem;
     }
 
-    /* Location cards in info panel */
+    /* Location in info strip */
     .contact-locations {
-      margin-top: auto;
-      padding-top: 3rem;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
     }
     .contact-location-label {
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
       text-transform: uppercase; color: var(--c-light); margin-bottom: 1rem; display: block;
-      transition: color 0.4s;
     }
     .contact-location-items {
       display: flex; flex-direction: column; gap: 0.6rem;
@@ -284,7 +289,7 @@
     }
     .contact-location-dot {
       width: 6px; height: 6px; border-radius: 50%;
-      background: var(--c-mid); flex-shrink: 0; transition: background 0.4s;
+      background: var(--c-mid); flex-shrink: 0;
     }
     .contact-location-item span {
       font-size: 0.92rem; color: rgba(255,255,255,0.65); font-weight: 400;
@@ -299,7 +304,7 @@
     }
     .footer-brand {
       font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
-      color: var(--c-muted); letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--c-mid); letter-spacing: 0.08em; text-transform: uppercase;
     }
     .footer-links { display: flex; gap: 2rem; list-style: none; }
     .footer-links a {
@@ -321,9 +326,8 @@
       .nav-hamburger { display: flex; }
       .nav-mobile { display: flex; }
       .page-hero { padding: 7rem 1.5rem 3.5rem; }
-      .contact-section { grid-template-columns: 1fr; }
       .contact-form-side { padding: 3.5rem 1.5rem; }
-      .contact-info-side { padding: 3.5rem 1.5rem; }
+      .contact-info-side { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
       .form-row { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
       .footer-contact { text-align: center; }
@@ -378,79 +382,66 @@
 
     <!-- Form side -->
     <div class="contact-form-side reveal">
-      <div class="section-eyebrow">Send a message</div>
-      <h2 class="section-heading">Tell me a bit<br>about yourself.</h2>
-      <p class="form-intro">Fill in the form and I'll get back to you as soon as I can. If you're not sure which service is right for you, just say so, we'll figure it out together.</p>
+      <div class="contact-form-inner">
+        <div class="section-eyebrow">Send a message</div>
+        <h2 class="section-heading">Tell me a bit<br>about yourself.</h2>
+        <p class="form-intro">Fill in the form and I'll get back to you as soon as I can. If you're not sure which service is right for you, just say so, we'll figure it out together.</p>
 
-      <!--
-        FORMSPREE SETUP:
-        1. Go to formspree.io and create a free account
-        2. Create a new form and copy your form ID
-        3. Replace YOUR_FORM_ID in the action URL below
-        e.g. action="https://formspree.io/f/abcdefgh"
-      -->
-      <form id="contactForm" action="https://formspree.io/f/mnpadljk" method="POST">
+        <form id="contactForm" action="https://formspree.io/f/mnpadljk" method="POST">
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Your name</label>
-            <input type="text" id="name" name="name" placeholder="First and last name" required />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" placeholder="First and last name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
           </div>
+
           <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone" placeholder="07700 000000" required />
           </div>
+
+          <div class="form-group">
+            <label for="service">Which service are you interested in?</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Select an option</option>
+              <option value="1:1 Personal Training">1:1 Personal Training</option>
+              <option value="2:1 Partner Training">2:1 Partner Training</option>
+              <option value="Online Coaching">Online Coaching</option>
+              <option value="Drop-in Session">Drop-in Session</option>
+              <option value="Programme Writing">Programme Writing</option>
+              <option value="Not sure yet">Not sure yet</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Anything else you'd like to share?</label>
+            <textarea id="message" name="message" placeholder="Tell me about your goals, where you're starting from, or anything else that feels relevant."></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            Send message
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="form-success-icon">✓</div>
+          <h3>Message sent.</h3>
+          <p>I'll be in touch as soon as I can. Looking forward to speaking with you.</p>
         </div>
-
-        <div class="form-group">
-          <label for="phone">Phone number <span style="opacity:0.5;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-          <input type="tel" id="phone" name="phone" placeholder="07700 000000" />
-        </div>
-
-        <div class="form-group">
-          <label for="service">Which service are you interested in?</label>
-          <select id="service" name="service" required>
-            <option value="" disabled selected>Select an option</option>
-            <option value="1:1 Personal Training">1:1 Personal Training</option>
-            <option value="2:1 Partner Training">2:1 Partner Training</option>
-            <option value="Online Coaching">Online Coaching</option>
-            <option value="Drop-in Session">Drop-in Session</option>
-            <option value="Programme Writing">Programme Writing</option>
-            <option value="Not sure yet">Not sure yet</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Anything else you'd like to share?</label>
-          <textarea id="message" name="message" placeholder="Tell me about your goals, where you're starting from, or anything else that feels relevant."></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit">
-          Send message
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-
-      </form>
-
-      <!-- Success state shown after submission -->
-      <div class="form-success" id="formSuccess">
-        <div class="form-success-icon">✓</div>
-        <h3>Message sent.</h3>
-        <p>I'll be in touch as soon as I can. Looking forward to speaking with you.</p>
       </div>
-
     </div>
 
     <!-- Info side -->
     <div class="contact-info-side reveal reveal-delay-1">
       <div>
         <p class="contact-info-heading">Contact details</p>
-
-        <div class="contact-detail">
-          <span class="contact-detail-label">Phone</span>
-          <a href="tel:07915307315" class="contact-detail-value">07915 307315</a>
-          <p class="contact-detail-sub">Call or text any time</p>
-        </div>
 
         <div class="contact-detail">
           <span class="contact-detail-label">Instagram</span>
@@ -488,7 +479,7 @@
 
   <!-- ── FOOTER ── -->
   <footer>
-    <div class="footer-brand">Fitness Education · Ross</div>
+    <div class="footer-brand">Fitness Education with Ross</div>
     <ul class="footer-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="byoc.html">BYOC</a></li>
@@ -498,7 +489,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="footer-contact">
-      07915 307315 &nbsp;·&nbsp; @fitnesseducation_ross<br>
+      @fitnesseducation_ross<br>
       Luxe Gyms Bristol · City Centre &amp; Bedminster
     </div>
   </footer>

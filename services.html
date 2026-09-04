@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Services Fitness Education with Ross</title>
+  <title>Services · Fitness Education with Ross</title>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
 
@@ -48,7 +48,7 @@
     }
     .nav-logo-text span {
       display: block; font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.18em; color: var(--c-muted); text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--c-mid); text-transform: uppercase;
     }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
     .nav-links a {
@@ -362,7 +362,79 @@
     .additional-price-note {
       font-size: 0.78rem; color: rgba(255,255,255,0.4);
       text-transform: uppercase; letter-spacing: 0.08em;
+      margin-top: 0.75rem; display: block;
     }
+
+    /* ── TESTIMONIALS ────────────────────────────────────────── */
+    .testimonials {
+      padding: 6rem 0;
+      background: var(--c-bg);
+      overflow: hidden;
+      text-align: center;
+    }
+    .testimonials .section-eyebrow { justify-content: center; }
+    .testimonials .section-heading { text-align: center; margin-bottom: 3.5rem; }
+    /* Viewport — clips the track, fades edges */
+    .carousel-viewport {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    }
+    /* Track — scrolls horizontally */
+    .carousel-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      animation: carousel-scroll 40s linear infinite;
+      cursor: grab;
+    }
+    .carousel-track:active { cursor: grabbing; }
+    .carousel-track.paused { animation-play-state: paused; }
+    @keyframes carousel-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    /* Each slide */
+    .carousel-slide {
+      flex-shrink: 0;
+      width: 380px;
+      padding: 0.25rem;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .testimonial-card {
+      background: var(--c-surface);
+      border-radius: 8px;
+      padding: 2.2rem 2rem;
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      overflow: hidden;
+      text-align: center;
+    }
+    .testimonial-quote {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--c-body);
+      font-style: italic;
+      font-weight: 400;
+    }
+    .testimonial-name {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-mid);
+    }
+    /* Fade adjacent slides, full opacity on centre */
+    .carousel-slide { opacity: 0.4; transform: scale(0.96); }
+    .carousel-slide.is-center { opacity: 1; transform: scale(1); }
 
     /* ── CTA BAND ────────────────────────────────────────────── */
     .cta-band {
@@ -393,7 +465,7 @@
     }
     .footer-brand {
       font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
-      color: var(--c-muted); letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--c-mid); letter-spacing: 0.08em; text-transform: uppercase;
     }
     .footer-links { display: flex; gap: 2rem; list-style: none; }
     .footer-links a {
@@ -575,7 +647,7 @@
       </div>
       <div>
         <div class="online-card">
-          <div class="online-price">£199<span>/mo</span></div>
+          <div class="online-price">£149<span>/mo</span></div>
           <div class="online-period">Monthly rolling</div>
           <ul class="online-includes">
             <li>Full 8-week structured programme</li>
@@ -608,11 +680,92 @@
         <div class="additional-card-tag">Standalone</div>
         <h3>Programme Writing</h3>
         <p>Already confident in the gym but want a structured plan to follow? I'll write a training programme built around your goals, without the ongoing coaching support.</p>
-        <div class="additional-price" style="font-size:1.4rem; opacity:0.6;">Get in touch</div>
+        <a href="contact.html" class="btn-primary" style="display:inline-flex;align-items:center;gap:0.6rem;margin-top:0.5rem;">Get in touch <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><polyline points="5,3 11,8 5,13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="additional-price-note">Pricing on request</div>
       </div>
     </div>
   </div>
+
+  <!-- ── TESTIMONIALS ── -->
+  <section class="testimonials">
+    <div class="section-eyebrow">What clients say</div>
+    <h2 class="section-heading">Results that speak<br>for themselves.</h2>
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="carouselTrack">
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"I came in not knowing the difference between a deadlift and a Romanian deadlift. By week four I was building my own sessions from scratch. The education side of it is what sets this apart from every other PT I've tried."</p>
+            <div class="testimonial-name">Jamie R.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Genuinely life changing."</p>
+            <div class="testimonial-name">Priya S.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"I'd been going to the gym for two years and making zero progress. Within eight weeks I finally understood why, and more importantly, what to do about it. Worth every penny."</p>
+            <div class="testimonial-name">Tom H.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"The best investment I've made in myself."</p>
+            <div class="testimonial-name">Ellie M.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Ross is incredibly patient and explains everything in a way that actually makes sense. I never felt judged for not knowing things. I came in as a complete beginner and left feeling like I actually know what I'm doing."</p>
+            <div class="testimonial-name">Chloe W.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"I lost 8kg and finally understand how to keep it off."</p>
+            <div class="testimonial-name">Dan F.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"The BYOC programme changed how I think about food and training completely. I don't need to Google everything anymore. I have the knowledge now and that's something no one can take away."</p>
+            <div class="testimonial-name">Sarah K.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Highly recommend to anyone who actually wants to learn, not just be told what to do."</p>
+            <div class="testimonial-name">Marcus T.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"I was sceptical about online coaching but Ross made it seamless. The weekly calls kept me accountable and the programme was structured so well that I never felt lost. Six weeks in and I'd already hit a goal I'd been chasing for a year."</p>
+            <div class="testimonial-name">Natalie B.</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Simple, effective, no nonsense. Exactly what I needed."</p>
+            <div class="testimonial-name">Chris O.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ── CTA ── -->
   <div class="cta-band">
@@ -622,7 +775,7 @@
 
   <!-- ── FOOTER ── -->
   <footer>
-    <div class="footer-brand">Fitness Education · Ross</div>
+    <div class="footer-brand">Fitness Education with Ross</div>
     <ul class="footer-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="byoc.html">BYOC</a></li>
@@ -632,7 +785,7 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="footer-contact">
-      07915 307315 &nbsp;·&nbsp; @fitnesseducation_ross<br>
+      @fitnesseducation_ross<br>
       Luxe Gyms Bristol City Centre &amp; Bedminster
     </div>
   </footer>
@@ -651,6 +804,74 @@
       mobileNav.classList.remove('open');
       document.body.style.overflow = '';
     }));
+
+    // ── Testimonial carousel ──────────────────────────────────
+    const track = document.getElementById('carouselTrack');
+
+    // Duplicate slides for seamless infinite loop
+    const slides = Array.from(track.children);
+    slides.forEach(slide => {
+      const clone = slide.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+
+    // Pause on hover (desktop)
+    track.addEventListener('mouseenter', () => track.classList.add('paused'));
+    track.addEventListener('mouseleave', () => {
+      track.classList.remove('paused');
+      isDragging = false;
+    });
+
+    // Touch support — pause and allow swipe
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let manualOffset = 0;
+    let animStart = null;
+    let currentTranslate = 0;
+
+    track.addEventListener('touchstart', (e) => {
+      track.classList.add('paused');
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+      const dx = e.touches[0].clientX - startX;
+      const style = window.getComputedStyle(track);
+      const matrix = new DOMMatrix(style.transform);
+      currentTranslate = matrix.m41 + dx;
+      track.style.transform = `translateX(${currentTranslate}px)`;
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {
+      setTimeout(() => track.classList.remove('paused'), 800);
+      track.style.transform = '';
+    });
+
+    // Highlight centre slide
+    function updateCentreSlide() {
+      const vpRect = track.parentElement.getBoundingClientRect();
+      const vpCentre = vpRect.left + vpRect.width / 2;
+      let closest = null;
+      let closestDist = Infinity;
+      track.querySelectorAll('.carousel-slide:not([aria-hidden])').forEach(slide => {
+        const rect = slide.getBoundingClientRect();
+        const slideCentre = rect.left + rect.width / 2;
+        const dist = Math.abs(slideCentre - vpCentre);
+        if (dist < closestDist) { closestDist = dist; closest = slide; }
+      });
+      track.querySelectorAll('.carousel-slide').forEach(s => s.classList.remove('is-center'));
+      if (closest) {
+        const idx = Array.from(track.children).indexOf(closest);
+        // Also highlight the clone
+        track.querySelectorAll('.carousel-slide').forEach((s, i) => {
+          if (i === idx || i === idx + slides.length) s.classList.add('is-center');
+        });
+      }
+    }
+    setInterval(updateCentreSlide, 120);
+    updateCentreSlide();
 
     // ── Scroll reveal ─────────────────────────────────────────
     const reveals = document.querySelectorAll('.reveal');
