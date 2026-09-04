@@ -120,12 +120,7 @@
     /* Dark overlay */
     .page-hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        160deg,
-        rgba(0,0,0,0.85) 0%,
-        rgba(0,0,0,0.6) 50%,
-        rgba(0,0,0,0.3) 100%
-      );
+      background: rgba(30,30,30,0.55);
       z-index: 1;
     }
     .page-hero::after {
@@ -539,6 +534,7 @@
   <div class="page-hero">
     <!-- Background image swap URL for Ross's own photo -->
     <div class="page-hero-bg"></div>
+    <div class="page-hero-overlay"></div>
     <!-- Background video add src="your-video.mp4" to activate, remove if using image only -->
     <!-- <video class="page-hero-video" autoplay muted loop playsinline src=""></video> -->
 

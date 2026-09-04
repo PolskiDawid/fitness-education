@@ -184,9 +184,8 @@
     }
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(160deg, var(--c-hero-overlay-a, rgba(26,31,23,0.82)) 0%, var(--c-hero-overlay-b, rgba(26,31,23,0.55)) 50%, var(--c-hero-overlay-c, rgba(68,135,2,0.20)) 100%);
+      background: rgba(30,30,30,0.55);
       z-index: 1;
-      transition: background 0.4s;
     }
     .hero-inner {
       position: relative; z-index: 2;
@@ -729,6 +728,7 @@
   <!-- ── HERO ── -->
   <div class="hero">
     <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
 
     <div class="hero-inner">
       <div class="hero-content">
