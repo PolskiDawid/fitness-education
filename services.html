@@ -369,7 +369,7 @@
     }
     .testimonials .section-eyebrow { justify-content: center; }
     .testimonials .section-heading { text-align: center; margin-bottom: 3.5rem; }
-    /* Viewport — clips the track, fades edges */
+    /* Viewport: clips the track, fades edges */
     .carousel-viewport {
       position: relative;
       width: 100%;
@@ -377,7 +377,7 @@
       mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
     }
-    /* Track — scrolls horizontally */
+    /* Track: scrolls horizontally */
     .carousel-track {
       display: flex;
       gap: 1.5rem;
@@ -394,7 +394,7 @@
     /* Each slide */
     .carousel-slide {
       flex-shrink: 0;
-      width: 380px;
+      width: 420px;
       padding: 0.25rem;
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
@@ -402,19 +402,18 @@
       background: var(--c-surface);
       border-radius: 8px;
       padding: 2.2rem 2rem;
-      height: 280px;
+      height: 400px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 1.2rem;
       box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-      overflow: hidden;
       text-align: center;
     }
     .testimonial-quote {
-      font-size: 1rem;
-      line-height: 1.75;
+      font-size: 0.95rem;
+      line-height: 1.7;
       color: var(--c-body);
       font-style: italic;
       font-weight: 400;
@@ -479,6 +478,9 @@
 
     /* ── RESPONSIVE ──────────────────────────────────────────── */
     @media (max-width: 960px) {
+      .carousel-slide { width: 320px; }
+      .testimonial-card { height: 440px; padding: 1.8rem 1.5rem; }
+      .testimonial-quote { font-size: 0.9rem; line-height: 1.65; }
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
@@ -691,71 +693,92 @@
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"I came in not knowing the difference between a deadlift and a Romanian deadlift. By week four I was building my own sessions from scratch. The education side of it is what sets this apart from every other PT I've tried."</p>
-            <div class="testimonial-name">Jamie R.</div>
+            <p class="testimonial-quote">"The progress I made with Ross was amazing. Person-centred planning that suited my lifestyle, meaning I kept things going as opposed to letting things slip. This resulted in feeling the best I'd ever felt, learning movements I had never practised even as a 'regular gym goer'. It was eye opening and would highly recommend if you want to see results and are feeling the plateau effect!"</p>
+            <div class="testimonial-name">Jake</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"Genuinely life changing."</p>
-            <div class="testimonial-name">Priya S.</div>
+            <p class="testimonial-quote">"Ross was amazing from the second I walked into the gym. He helped me build my confidence, as well as a routine in the gym that worked for me. Always there to support everything from training, eating and guidance. I don't think I would have stuck to the gym without Ross. Great guy, professional and friendly, highly recommended!"</p>
+            <div class="testimonial-name">Sam</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"I'd been going to the gym for two years and making zero progress. Within eight weeks I finally understood why, and more importantly, what to do about it. Worth every penny."</p>
-            <div class="testimonial-name">Tom H.</div>
+            <p class="testimonial-quote">"I've worked with other trainers before, but no one has explained the 'why' behind the movements as clearly as he does. He is a stickler for proper form, which has helped me stay injury-free and finally hit my personal bests eg in hip thrusts. Every session is well-planned, challenging, and actually fun. He is professional, punctual, motivational and a master of his craft."</p>
+            <div class="testimonial-name">Diane</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"The best investment I've made in myself."</p>
-            <div class="testimonial-name">Ellie M.</div>
+            <p class="testimonial-quote">"Ross is such a lovely friendly guy and a brilliant PT who provided great workout programmes to help me work towards my own personal goals. I've become much stronger and also much more confident now using weights and weight based machines and this is all down to Ross's teaching."</p>
+            <div class="testimonial-name">Joanne</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"Ross is incredibly patient and explains everything in a way that actually makes sense. I never felt judged for not knowing things. I came in as a complete beginner and left feeling like I actually know what I'm doing."</p>
-            <div class="testimonial-name">Chloe W.</div>
+            <p class="testimonial-quote">"I started my gym journey with Ross Gilrane's PT and it was the best introduction to fitness I could've ever chosen. He guided me and helped me with my nutrition/meal plan and fitness programmes. Now I can confidently eat proper food that is good for my body and see improvement in my strength. I am forever grateful to have experienced such a great introduction to the gym world, 10/10 Personal Trainer."</p>
+            <div class="testimonial-name">Mathew</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"I lost 8kg and finally understand how to keep it off."</p>
-            <div class="testimonial-name">Dan F.</div>
+            <p class="testimonial-quote">"Ross was my first personal trainer, and I couldn't have made a better choice! I was drawn to his expertise in calisthenics, as a yogi feeling out of place in the gym with no clear plan beyond wanting to build strength and conditioning. Ross created a tailored program that I still follow today."</p>
+            <div class="testimonial-name">Mehnaz</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"The BYOC programme changed how I think about food and training completely. I don't need to Google everything anymore. I have the knowledge now and that's something no one can take away."</p>
-            <div class="testimonial-name">Sarah K.</div>
+            <p class="testimonial-quote">"The thing that impressed me most about Ross's approach was his obvious professionalism. Within a week I had a full nutrition programme and an exercise programme. He selected the right type and level of exercise and gave detailed instructions on how to get the most from each. He encouraged me to push myself when necessary to help me achieve my best."</p>
+            <div class="testimonial-name">Matthew</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"Highly recommend to anyone who actually wants to learn, not just be told what to do."</p>
-            <div class="testimonial-name">Marcus T.</div>
+            <p class="testimonial-quote">"Ross was very kind and patient when I started with the PT sessions, I don't think I could have got anyone better. So calm all the time, and with his knowledge he was absolutely amazing. He was always smiling and courteous with everyone in the gym, always going that one step further. He was an asset to the gym and my fitness journey!"</p>
+            <div class="testimonial-name">Annette</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"I was sceptical about online coaching but Ross made it seamless. The weekly calls kept me accountable and the programme was structured so well that I never felt lost. Six weeks in and I'd already hit a goal I'd been chasing for a year."</p>
-            <div class="testimonial-name">Natalie B.</div>
+            <p class="testimonial-quote">"Really pleased with the experience and outcome. Excellent coach. Ross, good listener, very informative and develops bespoke, tailored programmes. Recommended Ross to friends who have been equally impressed."</p>
+            <div class="testimonial-name">Michael</div>
           </div>
         </div>
 
         <div class="carousel-slide">
           <div class="testimonial-card">
-            <p class="testimonial-quote">"Simple, effective, no nonsense. Exactly what I needed."</p>
-            <div class="testimonial-name">Chris O.</div>
+            <p class="testimonial-quote">"Dedicated to both your fitness and nutrition, if you're looking for a knowledgeable and motivating personal trainer who truly cares about your progress and helping you reach your full potential, I highly recommend Ross!"</p>
+            <div class="testimonial-name">Renaise</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"I started working with Ross for what was meant to be a 12-week programme to help with knee problems, but it quickly turned into 18 months because I was blown away by the progress we made. He put together a completely bespoke plan with training and nutrition, and always adapted things around my chaotic lifestyle, injuries and shifting goals."</p>
+            <div class="testimonial-name">Ufuoma</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"I'm now 100% confident stepping onto the gym floor with weights and machines, and I'm so grateful to Ross for that. His educational, supportive approach has given me the knowledge I needed to drop 3kg of fat, build muscle, and transform my physique and how I feel. These are just my early results and I'm looking forward to what we achieve together next. He is an incredible coach, I couldn't ask for a better PT!"</p>
+            <div class="testimonial-name">Jamie</div>
+          </div>
+        </div>
+
+        <div class="carousel-slide">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Ross made me appreciate how with commitment, consistency and the right mindset I can achieve the targets I want. His logistical approach, patience and care helped me smash weight records that I didn't think I could. Shifting excess weight, building definition and feeling better about it everyday. I would recommend Ross to anyone, especially those starting off at the gym."</p>
+            <div class="testimonial-name">Dawid</div>
           </div>
         </div>
 
@@ -819,7 +842,7 @@
       isDragging = false;
     });
 
-    // Touch support — pause and allow swipe
+    // Touch support: pause and allow swipe
     let isDragging = false;
     let startX = 0;
     let scrollLeft = 0;
